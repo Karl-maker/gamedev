@@ -13,24 +13,37 @@ function parseJson(value: string | undefined, label: string): unknown {
 
 export function getWebsiteConfig(): WebsiteConfig {
   const configured = parseJson(process.env.CONFIG_WEBSITE, "CONFIG_WEBSITE");
+  const company = parseJson(process.env.COMPANY_CONFIG, "COMPANY_CONFIG");
   const hero = parseJson(process.env.HERO_CONFIG, "HERO_CONFIG");
   const about = parseJson(process.env.ABOUT_CONFIG, "ABOUT_CONFIG");
   const achievements = parseJson(process.env.ACHIEVEMENTS_CONFIG, "ACHIEVEMENTS_CONFIG");
   const collaborators = parseJson(process.env.COLLABORATORS_CONFIG, "COLLABORATORS_CONFIG");
   const services = parseJson(process.env.SERVICES_CONFIG, "SERVICES_CONFIG");
   const trustLogos = parseJson(process.env.TRUST_LOGOS_CONFIG, "TRUST_LOGOS_CONFIG");
+  const trust = parseJson(process.env.TRUST_CONFIG, "TRUST_CONFIG");
+  const contact = parseJson(process.env.CONTACT_CONFIG, "CONTACT_CONFIG");
+  const experiments = parseJson(process.env.EXPERIMENTS_CONFIG, "EXPERIMENTS_CONFIG");
   const target = parseJson(process.env.TARGET_CONFIG, "TARGET_CONFIG");
   const legal = parseJson(process.env.LEGAL_CONFIG, "LEGAL_CONFIG");
   const socials = parseJson(process.env.SOCIAL_MEDIA_LINKS, "SOCIAL_MEDIA_LINKS");
   const base = configured && typeof configured === "object" ? configured as WebsiteConfig : defaultConfig;
   const candidate = {
     ...base,
+    ...(company && typeof company === "object" ? { company: { ...base.company, ...company } } : {}),
     ...(hero && typeof hero === "object" ? { hero: { ...base.hero, ...hero } } : {}),
     ...(about && typeof about === "object" ? { about: { ...base.about, ...about } } : {}),
     ...(achievements && typeof achievements === "object" ? { achievements: { ...base.achievements, ...achievements } } : {}),
     ...(collaborators && typeof collaborators === "object" ? { collaborators: { ...base.collaborators, ...collaborators } } : {}),
     ...(Array.isArray(services) ? { services } : {}),
-    ...(Array.isArray(trustLogos) ? { trust: { ...base.trust, logos: trustLogos } } : {}),
+    ...((trust && typeof trust === "object") || Array.isArray(trustLogos) ? {
+      trust: {
+        ...base.trust,
+        ...(trust && typeof trust === "object" ? trust : {}),
+        ...(Array.isArray(trustLogos) ? { logos: trustLogos } : {})
+      }
+    } : {}),
+    ...(contact && typeof contact === "object" ? { contact: { ...base.contact, ...contact } } : {}),
+    ...(Array.isArray(experiments) ? { experiments } : {}),
     ...(process.env.SITE_URL ? { company: { ...base.company, url: process.env.SITE_URL } } : {}),
     ...(target ? { target } : {}),
     ...(legal ? { legal } : {})

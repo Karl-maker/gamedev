@@ -25,10 +25,14 @@ Use one-line JSON in Vercel or other hosting dashboards. For complex installatio
 `SITE_URL` overrides `company.url` and should be the exact public origin, including the local port where relevant. Focused JSON overrides are available when you do not want to duplicate the full website object:
 
 - `HERO_CONFIG` merges into the hero.
+- `COMPANY_CONFIG` merges into company identity and positioning.
 - `ABOUT_CONFIG` merges into the About content.
 - `SERVICES_CONFIG` replaces the services array.
 - `ACHIEVEMENTS_CONFIG` controls the orange immersive-training showcase on the home page.
 - `COLLABORATORS_CONFIG` controls the technology provider and collaborator logo section.
+- `TRUST_CONFIG` merges into the client proof section.
+- `CONTACT_CONFIG` merges into contact-page positioning.
+- `EXPERIMENTS_CONFIG` replaces the A/B-test definitions.
 - `TRUST_LOGOS_CONFIG` replaces the customer logo array.
 
 ## Verified credentials

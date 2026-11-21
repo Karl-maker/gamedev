@@ -1,6 +1,8 @@
 .next
 node_modules
 .env
+.env.xr
+.env.auction
 .env.local
 coverage
 *.log

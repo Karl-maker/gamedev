@@ -41,7 +41,7 @@ export default async function Home() {
         <div className="container"><p>{config.trust.title}</p><div className="logo-track">{config.trust.logos.map((logo) => <span className={`trust-logo${logo.name.toLowerCase().includes("eislett technologies") ? " trust-logo-circle" : ""}`} key={logo.name}><Image src={logo.src} alt={`${logo.name} logo`} width={145} height={45} /></span>)}</div></div>
       </section>
       <section className="section container">
-        <div className="section-heading"><span className="eyebrow">What we do</span><h2>Services built around your delivery model</h2><p>{config.company.description}</p></div>
+        <div className="section-heading"><span className="eyebrow">What we do</span><h2>Services built around your operation</h2><p>{config.company.description}</p></div>
         <div className="service-grid">{config.services.map((service) => { const Icon = icons[service.icon]; return <article className="service-card" key={service.slug}><div className="icon-box"><Icon /></div><h3>{service.title}</h3><p>{service.description}</p><Link className="text-link" href={`/services#${service.slug}`}>Learn more →</Link></article>; })}</div>
       </section>
       <section className="section about-split">
@@ -65,10 +65,10 @@ export default async function Home() {
             <div className="world-grid" />
             <div className="world-orbit world-orbit-one" />
             <div className="world-orbit world-orbit-two" />
-            <div className="world-core"><Box /><span>Virtual world</span><strong>Scenario active</strong></div>
-            <div className="telemetry-card telemetry-one"><Activity /><span>Actions</span><strong>Captured live</strong></div>
-            <div className="telemetry-card telemetry-two"><Route /><span>Decisions</span><strong>Mapped in context</strong></div>
-            <div className="telemetry-card telemetry-three"><ShieldCheck /><span>Practice</span><strong>Safe to repeat</strong></div>
+            <div className="world-core"><Box /><span>{config.achievements.visual.coreLabel}</span><strong>{config.achievements.visual.coreValue}</strong></div>
+            <div className="telemetry-card telemetry-one"><Activity /><span>{config.achievements.visual.signals[0].label}</span><strong>{config.achievements.visual.signals[0].value}</strong></div>
+            <div className="telemetry-card telemetry-two"><Route /><span>{config.achievements.visual.signals[1].label}</span><strong>{config.achievements.visual.signals[1].value}</strong></div>
+            <div className="telemetry-card telemetry-three"><ShieldCheck /><span>{config.achievements.visual.signals[2].label}</span><strong>{config.achievements.visual.signals[2].value}</strong></div>
             <div className="world-signal signal-one" />
             <div className="world-signal signal-two" />
             <div className="world-signal signal-three" />

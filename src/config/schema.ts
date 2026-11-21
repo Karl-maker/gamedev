@@ -104,6 +104,22 @@ export const websiteConfigSchema = z.object({
       title: z.string(),
       description: z.string()
     })).min(3).max(4),
+    visual: z.object({
+      coreLabel: z.string(),
+      coreValue: z.string(),
+      signals: z.array(z.object({
+        label: z.string(),
+        value: z.string()
+      })).length(3)
+    }).default({
+      coreLabel: "Virtual world",
+      coreValue: "Scenario active",
+      signals: [
+        { label: "Actions", value: "Captured live" },
+        { label: "Decisions", value: "Mapped in context" },
+        { label: "Practice", value: "Safe to repeat" }
+      ]
+    }),
     cta: linkSchema
   }).default({
     eyebrow: "Measurable immersive learning",
@@ -119,9 +135,19 @@ export const websiteConfigSchema = z.object({
       { title: "Safe to repeat", description: "Learners can pause, retry and build confidence before the real moment arrives." },
       { title: "Designed to improve", description: "Track choices, timing and outcomes to reveal where guidance or practice is needed." }
     ],
+    visual: {
+      coreLabel: "Virtual world",
+      coreValue: "Scenario active",
+      signals: [
+        { label: "Actions", value: "Captured live" },
+        { label: "Decisions", value: "Mapped in context" },
+        { label: "Practice", value: "Safe to repeat" }
+      ]
+    },
     cta: { label: "Design a training simulation", href: "/contact" }
   }),
   collaborators: z.object({
+    enabled: z.boolean().default(true),
     eyebrow: z.string(),
     title: z.string(),
     description: z.string(),
@@ -133,6 +159,7 @@ export const websiteConfigSchema = z.object({
       href: z.string().url()
     })).min(1)
   }).default({
+    enabled: true,
     eyebrow: "Technology providers & collaborators",
     title: "Built with a world-class creative technology stack",
     description: "The platforms and tools behind our custom virtual environments, real-time experiences and secure delivery.",

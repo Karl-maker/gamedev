@@ -79,9 +79,19 @@ export const defaultConfig: WebsiteConfig = {
       { title: "Safe to repeat", description: "Learners can pause, retry and build confidence before the real moment arrives." },
       { title: "Designed to improve", description: "Track choices, timing and outcomes to reveal where guidance or practice is needed." }
     ],
+    visual: {
+      coreLabel: "Virtual world",
+      coreValue: "Scenario active",
+      signals: [
+        { label: "Actions", value: "Captured live" },
+        { label: "Decisions", value: "Mapped in context" },
+        { label: "Practice", value: "Safe to repeat" }
+      ]
+    },
     cta: { label: "Design a training simulation", href: "/contact" }
   },
   collaborators: {
+    enabled: true,
     eyebrow: "Technology providers & collaborators",
     title: "Built with a world-class creative technology stack",
     description: "The platforms and tools behind our custom virtual environments, real-time experiences and secure delivery.",

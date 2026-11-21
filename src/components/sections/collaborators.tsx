@@ -24,6 +24,7 @@ function BrandMark({ icon, name }: { icon: WebsiteConfig["collaborators"]["items
 }
 
 export function Collaborators({ config }: { config: WebsiteConfig["collaborators"] }) {
+  if (!config.enabled) return null;
   return (
     <section className="section collaborators-section">
       <div className="container">
