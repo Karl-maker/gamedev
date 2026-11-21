@@ -13,7 +13,7 @@ export default function TermsPage() {
 
     <section id="about"><h2>1. About us and these terms</h2>
       <p>{company.legalName} operates this website from {company.address}. You can contact us at <a href={`mailto:${company.email}`}>{company.email}</a>{legal.registrationNumber ? `; company registration number ${legal.registrationNumber}` : ""}.</p>
-      <p>These terms apply only to public website use. Product testing, consulting, subscriptions, purchases, or other engagements are governed by a separate written agreement. If a separate agreement conflicts with these terms concerning the contracted service, that agreement controls.</p>
+      <p>These terms apply only to public website use. Legal technology, workflow automation, software development, integrations, subscriptions, or other engagements are governed by a separate written agreement. If a separate agreement conflicts with these terms concerning the contracted service, that agreement controls.</p>
     </section>
     <section><h2>2. Eligibility and access</h2>
       <p>You must be legally able to accept these terms and, when acting for an organisation, authorised to bind or communicate for it. The website is not directed to children under {legal.minimumAge}. We may modify, suspend, restrict, or discontinue all or part of the website where reasonably necessary, including for maintenance, security, legal compliance, or business changes.</p>

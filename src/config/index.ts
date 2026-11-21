@@ -29,7 +29,13 @@ export function getWebsiteConfig(): WebsiteConfig {
   const base = configured && typeof configured === "object" ? configured as WebsiteConfig : defaultConfig;
   const candidate = {
     ...base,
-    ...(company && typeof company === "object" ? { company: { ...base.company, ...company } } : {}),
+    ...((company && typeof company === "object") || process.env.SITE_URL ? {
+      company: {
+        ...base.company,
+        ...(company && typeof company === "object" ? company : {}),
+        ...(process.env.SITE_URL ? { url: process.env.SITE_URL } : {})
+      }
+    } : {}),
     ...(hero && typeof hero === "object" ? { hero: { ...base.hero, ...hero } } : {}),
     ...(about && typeof about === "object" ? { about: { ...base.about, ...about } } : {}),
     ...(achievements && typeof achievements === "object" ? { achievements: { ...base.achievements, ...achievements } } : {}),
@@ -44,7 +50,6 @@ export function getWebsiteConfig(): WebsiteConfig {
     } : {}),
     ...(contact && typeof contact === "object" ? { contact: { ...base.contact, ...contact } } : {}),
     ...(Array.isArray(experiments) ? { experiments } : {}),
-    ...(process.env.SITE_URL ? { company: { ...base.company, url: process.env.SITE_URL } } : {}),
     ...(target ? { target } : {}),
     ...(legal ? { legal } : {})
   };

@@ -38,7 +38,7 @@ export default async function Home() {
         </div>
       </section>
       <section className="trust-strip">
-        <div className="container"><p>{config.trust.title}</p><div className="logo-track">{config.trust.logos.map((logo) => <span className={`trust-logo${logo.name.toLowerCase().includes("eislett technologies") ? " trust-logo-circle" : ""}`} key={logo.name}><Image src={logo.src} alt={`${logo.name} logo`} width={145} height={45} /></span>)}</div></div>
+        <div className="container"><p>{config.trust.title}</p><div className="logo-track">{config.trust.logos.map((logo) => <span className={`trust-logo${logo.name.toLowerCase().includes("eislett technologies") ? " trust-logo-circle" : ""}`} key={logo.name}><Image src={logo.src} alt={`${logo.name} logo`} fill sizes="145px" /></span>)}</div></div>
       </section>
       <section className="section container">
         <div className="section-heading"><span className="eyebrow">What we do</span><h2>Services built around your operation</h2><p>{config.company.description}</p></div>
@@ -61,7 +61,7 @@ export default async function Home() {
             </div>
             <Link className="button achievement-button" href={config.achievements.cta.href}>{config.achievements.cta.label} <span aria-hidden="true">→</span></Link>
           </div>
-          <div className="world-visual" aria-label="Illustration of a tracked virtual training scenario">
+          <div className="world-visual" aria-label="Illustration of an automated legal intake workflow">
             <div className="world-grid" />
             <div className="world-orbit world-orbit-one" />
             <div className="world-orbit world-orbit-two" />

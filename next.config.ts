@@ -19,6 +19,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "eddiesoonandco.syncpoly.com" },
       { protocol: "https", hostname: "eislettechnologies.com" },
       { protocol: "https", hostname: "eisletteducation.com" },
+      { protocol: "https", hostname: "novickedelstein.com" },
+      { protocol: "https", hostname: "media.licdn.com" },
       { protocol: "https", hostname: "images.squarespace-cdn.com" },
       { protocol: "https", hostname: "images.credly.com" },
       { protocol: "https", hostname: "upload.wikimedia.org" },
@@ -37,7 +39,7 @@ const nextConfig: NextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              `default-src 'self'; script-src 'self' 'unsafe-inline' ${analyticsOrigin}; connect-src 'self' ${analyticsOrigin}; img-src 'self' data: blob: https://images.pexels.com https://images.unsplash.com https://*.notion.so https://*.amazonaws.com https://images.credly.com https://upload.wikimedia.org https://flagcdn.com https://eddiesoonandco.syncpoly.com https://eislettechnologies.com https://eisletteducation.com https://images.squarespace-cdn.com; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests`
+              `default-src 'self'; script-src 'self' 'unsafe-inline' ${analyticsOrigin}; connect-src 'self' ${analyticsOrigin}; img-src 'self' data: blob: https://images.pexels.com https://images.unsplash.com https://*.notion.so https://*.amazonaws.com https://images.credly.com https://upload.wikimedia.org https://flagcdn.com https://media.licdn.com https://eddiesoonandco.syncpoly.com https://eislettechnologies.com https://eisletteducation.com https://novickedelstein.com https://images.squarespace-cdn.com; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests`
           }
         ]
       }

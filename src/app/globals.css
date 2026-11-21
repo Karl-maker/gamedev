@@ -82,7 +82,7 @@ button { cursor: pointer; }
 .trust-strip { border-block: 1px solid var(--line); background: #fdfcf9; padding: 36px 0 38px; text-align: center; }
 .trust-strip p { margin: 0 0 23px; color: var(--muted); font-size: 11px; font-weight: 680; letter-spacing: .09em; text-transform: uppercase; }
 .logo-track { display: flex; justify-content: space-around; align-items: center; gap: 36px; overflow: hidden; }
-.trust-logo { display: grid; place-items: center; flex: 0 0 auto; width: 145px; height: 50px; }
+.trust-logo { position: relative; display: grid; place-items: center; flex: 0 0 auto; width: 145px; height: 50px; }
 .logo-track img { filter: grayscale(1); opacity: .54; object-fit: contain; transition: opacity .2s, filter .2s; }
 .logo-track img:hover { filter: grayscale(0); opacity: .85; }
 .trust-logo-circle { width: 58px; height: 58px; overflow: hidden; border: 1px solid rgba(16,59,50,.12); border-radius: 50%; background: var(--white); box-shadow: 0 7px 20px rgba(16,59,50,.09); }
