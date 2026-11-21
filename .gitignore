@@ -3,6 +3,7 @@ node_modules
 .env
 .env.xr
 .env.auction
+.env.legal
 .env.local
 coverage
 *.log

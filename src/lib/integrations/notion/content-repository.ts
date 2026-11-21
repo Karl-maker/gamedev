@@ -1,6 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import type { ContentBlock, ContentEntry, ContentRepository, RichText } from "@/lib/integrations/content/types";
+import { getNotionClient } from "./client";
 
 type NotionProperty = {
   type: string;
@@ -11,6 +12,7 @@ type NotionProperty = {
   multi_select?: { name: string }[];
   checkbox?: boolean;
   url?: string | null;
+  status?: { name: string } | null;
 };
 type NotionPage = {
   id: string;
@@ -18,23 +20,6 @@ type NotionPage = {
   cover?: { type: "external" | "file"; external?: { url: string }; file?: { url: string } } | null;
   properties: Record<string, NotionProperty>;
 };
-
-const notionVersion = "2022-06-28";
-
-async function notionFetch<T>(path: string, init?: RequestInit): Promise<T> {
-  if (!process.env.NOTION_TOKEN) throw new Error("NOTION_TOKEN is not configured.");
-  const response = await fetch(`https://api.notion.com/v1${path}`, {
-    ...init,
-    headers: {
-      Authorization: `Bearer ${process.env.NOTION_TOKEN}`,
-      "Notion-Version": notionVersion,
-      "Content-Type": "application/json",
-      ...init?.headers
-    }
-  });
-  if (!response.ok) throw new Error(`Notion request failed (${response.status}).`);
-  return response.json() as Promise<T>;
-}
 
 const text = (property?: NotionProperty) =>
   (property?.title ?? property?.rich_text ?? []).map((item) => item.plain_text).join("");
@@ -50,9 +35,11 @@ function mapPage(page: NotionPage, type: "blog" | "news"): ContentEntry | null {
   const title = text(property(page, "Title", "Name"));
   const slug = text(property(page, "Slug")) || title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   const publishedAt = property(page, "Published At", "Publish Date", "Date")?.date?.start;
-  const status = property(page, "Status")?.select?.name?.toLowerCase();
+  const statusProperty = property(page, "Status", "Publication Status");
+  const status = (statusProperty?.status?.name ?? statusProperty?.select?.name)?.toLowerCase();
   const published = property(page, "Published")?.checkbox;
-  if (!title || !slug || (!publishedAt && !published) || (status && status !== "published")) return null;
+  const unpublishedStatuses = ["draft", "unpublished", "private", "archived"];
+  if (!title || !slug || published === false || (status && unpublishedStatuses.includes(status))) return null;
   const coverProperty = property(page, "Cover", "Cover Image")?.url ?? undefined;
   const pageCover = page.cover?.external?.url ?? page.cover?.file?.url;
   return {
@@ -69,19 +56,21 @@ function mapPage(page: NotionPage, type: "blog" | "news"): ContentEntry | null {
 }
 
 async function getBlocks(blockId: string): Promise<ContentBlock[]> {
+  const notion = getNotionClient();
   const result: ContentBlock[] = [];
   let cursor: string | undefined;
   do {
-    const query = cursor ? `?page_size=100&start_cursor=${encodeURIComponent(cursor)}` : "?page_size=100";
-    const response = await notionFetch<{
-      results: Array<ContentBlock & { has_children?: boolean }>;
-      has_more: boolean;
-      next_cursor?: string;
-    }>(`/blocks/${blockId}/children${query}`);
-    for (const block of response.results) {
+    const response = await notion.blocks.children.list({
+      block_id: blockId,
+      page_size: 100,
+      ...(cursor ? { start_cursor: cursor } : {})
+    });
+    for (const item of response.results) {
+      if (item.object !== "block" || !("type" in item)) continue;
+      const block = item as unknown as ContentBlock & { has_children?: boolean };
       result.push(block.has_children ? { ...block, children: await getBlocks(block.id) } : block);
     }
-    cursor = response.has_more ? response.next_cursor : undefined;
+    cursor = response.has_more && response.next_cursor ? response.next_cursor : undefined;
   } while (cursor);
   return result;
 }
@@ -90,25 +79,29 @@ export class NotionContentRepository implements ContentRepository {
   async list(type: "blog" | "news", limit = 12) {
     const databaseId = type === "blog" ? process.env.NOTION_BLOG_DATABASE_ID : process.env.NOTION_NEWS_DATABASE_ID;
     if (!databaseId || !process.env.NOTION_TOKEN) return [];
+    const notion = getNotionClient();
+    const database = await notion.databases.retrieve({ database_id: databaseId });
+    if (!("data_sources" in database) || !database.data_sources[0]) return [];
+    const dataSourceId = database.data_sources[0].id;
     const entries: ContentEntry[] = [];
     let cursor: string | undefined;
     do {
-      const response = await notionFetch<{
-        results: NotionPage[];
-        has_more: boolean;
-        next_cursor?: string | null;
-      }>(`/databases/${databaseId}/query`, {
-        method: "POST",
-        body: JSON.stringify({
-          page_size: 100,
-          ...(cursor ? { start_cursor: cursor } : {}),
-          sorts: [{ property: "Published At", direction: "descending" }]
-        })
+      const response = await notion.dataSources.query({
+        data_source_id: dataSourceId,
+        page_size: 100,
+        ...(cursor ? { start_cursor: cursor } : {}),
+        sorts: [{ timestamp: "last_edited_time", direction: "descending" }],
+        result_type: "page"
       });
-      entries.push(...response.results.map((page) => mapPage(page, type)).filter((entry): entry is ContentEntry => Boolean(entry)));
+      entries.push(...response.results
+        .filter((result) => result.object === "page" && "properties" in result)
+        .map((page) => mapPage(page as NotionPage, type))
+        .filter((entry): entry is ContentEntry => Boolean(entry)));
       cursor = response.has_more && response.next_cursor ? response.next_cursor : undefined;
     } while (cursor && entries.length < limit);
-    return entries.slice(0, limit);
+    return entries
+      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+      .slice(0, limit);
   }
 
   async findBySlug(type: "blog" | "news", slug: string) {
@@ -120,12 +113,32 @@ export class NotionContentRepository implements ContentRepository {
 
 const repository = new NotionContentRepository();
 export const listContent = unstable_cache(
-  (type: "blog" | "news", limit?: number) => repository.list(type, limit),
+  async (type: "blog" | "news", limit?: number) => {
+    try {
+      return await repository.list(type, limit);
+    } catch (error) {
+      if (process.env.NODE_ENV === "development") {
+        const message = error instanceof Error ? error.message : "Unknown Notion error";
+        console.warn(`[Notion] ${type} content unavailable: ${message}`);
+      }
+      return [];
+    }
+  },
   ["notion-content-list"],
   { revalidate: 300, tags: ["notion-content"] }
 );
 export const getContent = unstable_cache(
-  (type: "blog" | "news", slug: string) => repository.findBySlug(type, slug),
+  async (type: "blog" | "news", slug: string) => {
+    try {
+      return await repository.findBySlug(type, slug);
+    } catch (error) {
+      if (process.env.NODE_ENV === "development") {
+        const message = error instanceof Error ? error.message : "Unknown Notion error";
+        console.warn(`[Notion] ${type} entry unavailable: ${message}`);
+      }
+      return null;
+    }
+  },
   ["notion-content-entry"],
   { revalidate: 300, tags: ["notion-content"] }
 );

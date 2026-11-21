@@ -62,7 +62,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     publisher: { "@id": `${config.company.url.replace(/\/$/, "")}/#organization` }
   };
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body>
         <a className="skip-link" href="#main">Skip to content</a>
         <ExperimentProvider experiments={config.experiments}>

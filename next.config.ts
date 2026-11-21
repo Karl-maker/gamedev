@@ -7,6 +7,7 @@ const analyticsOrigin = (() => {
     return "https://cloud.umami.is";
   }
 })();
+const developmentEval = process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : "";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -39,7 +40,7 @@ const nextConfig: NextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              `default-src 'self'; script-src 'self' 'unsafe-inline' ${analyticsOrigin}; connect-src 'self' ${analyticsOrigin}; img-src 'self' data: blob: https://images.pexels.com https://images.unsplash.com https://*.notion.so https://*.amazonaws.com https://images.credly.com https://upload.wikimedia.org https://flagcdn.com https://media.licdn.com https://eddiesoonandco.syncpoly.com https://eislettechnologies.com https://eisletteducation.com https://novickedelstein.com https://images.squarespace-cdn.com; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests`
+              `default-src 'self'; script-src 'self' 'unsafe-inline'${developmentEval} ${analyticsOrigin}; connect-src 'self' ${analyticsOrigin}; img-src 'self' data: blob: https://images.pexels.com https://images.unsplash.com https://*.notion.so https://*.amazonaws.com https://images.credly.com https://upload.wikimedia.org https://flagcdn.com https://media.licdn.com https://eddiesoonandco.syncpoly.com https://eislettechnologies.com https://eisletteducation.com https://novickedelstein.com https://images.squarespace-cdn.com; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests`
           }
         ]
       }

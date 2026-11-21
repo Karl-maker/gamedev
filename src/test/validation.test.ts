@@ -21,6 +21,9 @@ const validLead = {
 
 describe("lead validation", () => {
   it("accepts a complete lead", () => expect(leadSchema.safeParse(validLead).success).toBe(true));
+  it("accepts international formatting and extensions", () => {
+    expect(leadSchema.safeParse({ ...validLead, phone: "+44 (0)20 7946.0958 ext. 24" }).success).toBe(true);
+  });
   it("rejects bots filling the honeypot", () => expect(leadSchema.safeParse({ ...validLead, website: "spam" }).success).toBe(false));
   it("rejects invalid contact details", () => expect(leadSchema.safeParse({ ...validLead, workEmail: "bad", phone: "12" }).success).toBe(false));
   it("requires explicit consent", () => expect(leadSchema.safeParse({ ...validLead, consent: false }).success).toBe(false));

@@ -27,13 +27,14 @@ export function getWebsiteConfig(): WebsiteConfig {
   const legal = parseJson(process.env.LEGAL_CONFIG, "LEGAL_CONFIG");
   const socials = parseJson(process.env.SOCIAL_MEDIA_LINKS, "SOCIAL_MEDIA_LINKS");
   const base = configured && typeof configured === "object" ? configured as WebsiteConfig : defaultConfig;
+  const publicBaseUrl = process.env.BASE_URL || process.env.SITE_URL;
   const candidate = {
     ...base,
-    ...((company && typeof company === "object") || process.env.SITE_URL ? {
+    ...((company && typeof company === "object") || publicBaseUrl ? {
       company: {
         ...base.company,
         ...(company && typeof company === "object" ? company : {}),
-        ...(process.env.SITE_URL ? { url: process.env.SITE_URL } : {})
+        ...(publicBaseUrl ? { url: publicBaseUrl } : {})
       }
     } : {}),
     ...(hero && typeof hero === "object" ? { hero: { ...base.hero, ...hero } } : {}),

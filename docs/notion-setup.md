@@ -11,7 +11,13 @@ Official reference: `https://developers.notion.com/docs/create-a-notion-integrat
 
 ## 2. Lead database schema
 
-The lead database must contain these exact properties:
+The only required property is a Notion **Title** property; its name can be
+`Name`, `Lead`, or anything else. The integration reads the database schema,
+writes to any compatible columns it finds, and stores the complete submission
+in the page body. This prevents submissions failing when optional columns have
+not been created.
+
+For a more useful table view, these optional properties are recommended:
 
 | Property | Notion type |
 | --- | --- |
@@ -33,7 +39,10 @@ The lead database must contain these exact properties:
 | Submitted At | Date |
 | Consent | Checkbox |
 
-Notion creates select options sent by the integration if permissions allow. If your workspace restricts that, add the UI choices from `src/data/options.ts` manually.
+Column names are matched case-insensitively, with common aliases supported.
+Notion creates select options sent by the integration if permissions allow. If
+your workspace restricts that, add the UI choices from `src/data/options.ts`
+manually.
 
 After placing the token and database ID in `.env.local`, create/update these columns automatically:
 
@@ -47,15 +56,16 @@ npm run notion:setup
 
 ## 3. Blog/news schema
 
-Create a database with:
+Create a database with a Title property. The following optional fields provide
+better SEO and editorial control:
 
 | Property | Type | Notes |
 | --- | --- | --- |
 | Title | Title | Required |
 | Slug | Text | Recommended; generated from title when blank |
 | Excerpt | Text | Search/social description |
-| Published At | Date | Required for publishing and sorting |
-| Status | Select | Use `Published`; drafts are excluded |
+| Published At | Date | Used for publishing dates and sorting |
+| Status | Select or Status | Use `Draft` to hide an entry; `Published` or no status is visible |
 | Tags | Multi-select | Optional |
 | Cover | URL | Optional alternative to a page cover |
 
@@ -67,9 +77,20 @@ Content is fetched server-side, cached for five minutes, and rendered as semanti
 
 Configure a webhook to `POST /api/revalidate` with the raw-body HMAC-SHA256 in `x-webhook-signature`, using `NOTION_WEBHOOK_SECRET`. If your automation tool cannot sign requests, use the five-minute cache rather than exposing an unauthenticated revalidation endpoint.
 
+## 5. Unsubscribe records
+
+Set `NOTION_UNSUBSCRIBE_DATABASE_ID` to a dedicated database with a Title
+property. Optional properties are `Email` (Email), `Status` (Select),
+`Submitted At` (Date), and `Source` (URL). The integration is schema-aware and
+also writes the complete preference record into the page body.
+
+Until a dedicated database is configured, unsubscribe records use
+`NOTION_LEAD_DATABASE_ID` as a temporary fallback.
+
 ## Troubleshooting
 
 - 401: token is missing/invalid.
 - 404: integration is not connected to the database, or ID is wrong.
 - 400: a property name/type differs from the lead schema.
-- Empty publishing page: confirm `Published At` is set and `Status` is exactly `Published`.
+- Empty publishing page: confirm the integration is connected to the database.
+  Entries marked `Draft`, `Unpublished`, `Private`, or `Archived` are hidden.

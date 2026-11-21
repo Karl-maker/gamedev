@@ -16,8 +16,8 @@ export function LeadForm() {
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
   const [countryName, setCountryName] = useState("");
-  const [callingCodeId, setCallingCodeId] = useState("TT:+1868");
-  const selectedCallingCode = callingCodes.find((option) => option.id === callingCodeId) ?? callingCodes[0];
+  const [callingCodeId, setCallingCodeId] = useState("");
+  const selectedCallingCode = callingCodes.find((option) => option.id === callingCodeId);
   const callingCodeOptions: FlagSelectOption[] = callingCodes.map((option) => ({
     id: option.id,
     value: option.id,
@@ -33,15 +33,6 @@ export function LeadForm() {
     label: option.name,
     secondary: option.code
   }));
-
-  function updateCountry(name: string) {
-    setCountryName(name);
-    const country = countryOptions.find((option) => option.name === name);
-    const primaryCode = callingCodes.find(
-      (option) => option.countryCode === country?.code && option.primary
-    );
-    if (primaryCode) setCallingCodeId(primaryCode.id);
-  }
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -92,8 +83,9 @@ export function LeadForm() {
       </div>
       <div className="form-row phone-row">
         <div className="field-group"><span className="field-label">Country/region code</span>
-          <FlagSelect options={callingCodeOptions} value={callingCodeId} onChange={setCallingCodeId} placeholder="Select calling code" ariaLabel="International calling code" />
-          <input type="hidden" name="callingCode" value={selectedCallingCode.value} />
+          <FlagSelect options={callingCodeOptions} value={callingCodeId} onChange={setCallingCodeId} placeholder="Select calling code" ariaLabel="International calling code" invalid={Boolean(errors.callingCode)} />
+          <input type="hidden" name="callingCode" value={selectedCallingCode?.value ?? ""} />
+          {error("callingCode")}
         </div>
         <label>Phone number<input name="phone" inputMode="tel" autoComplete="tel-national" required aria-invalid={Boolean(errors.phone)} />{error("phone")}</label>
       </div>
@@ -103,7 +95,7 @@ export function LeadForm() {
         <label>Industry<select name="industry" defaultValue="" required><option value="" disabled>Select industry</option>{industries.map((item) => <option key={item}>{item}</option>)}</select>{error("industry")}</label>
       </div>
       <div className="field-group"><span className="field-label">Country or territory</span>
-        <FlagSelect name="country" options={countrySelectOptions} value={countryName} onChange={updateCountry} placeholder="Select country or territory" ariaLabel="Country or territory" invalid={Boolean(errors.country)} />
+        <FlagSelect name="country" options={countrySelectOptions} value={countryName} onChange={setCountryName} placeholder="Select country or territory" ariaLabel="Country or territory" invalid={Boolean(errors.country)} />
         <span className="field-hint">Open the list and search by country name or ISO code.</span>
         {error("country")}
       </div>

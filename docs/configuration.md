@@ -22,7 +22,15 @@ The major sections are:
 
 Use one-line JSON in Vercel or other hosting dashboards. For complex installations, generate the JSON in deployment tooling rather than hand-editing it.
 
-`SITE_URL` overrides `company.url` and should be the exact public origin, including the local port where relevant. Focused JSON overrides are available when you do not want to duplicate the full website object:
+`BASE_URL` is the preferred exact public origin used for website metadata,
+canonical links, email links, and unsubscribe links. `SITE_URL` remains a
+backwards-compatible fallback. Do not include a trailing slash.
+
+```dotenv
+BASE_URL=https://www.example.com
+```
+
+Focused JSON overrides are available when you do not want to duplicate the full website object:
 
 - `HERO_CONFIG` merges into the hero.
 - `COMPANY_CONFIG` merges into company identity and positioning.
@@ -93,6 +101,30 @@ NEXT_PUBLIC_UMAMI_SCRIPT_URL=https://analytics.example.com/script.js
 ```
 
 The script is absent until the visitor explicitly allows analytics and remains absent when Do Not Track is enabled. Cloud Umami may have paid tiers; “free” here refers to self-hosting the open-source project.
+
+## Email and unsubscribe preferences
+
+Set `SMTP_FROM` to an address or domain verified by the configured mail
+provider. The acknowledgement email includes a plain-text alternative,
+branded HTML, support/privacy links, and a signed unsubscribe URL.
+
+```dotenv
+SMTP_FROM="Example Support <support@example.com>"
+LEAD_NOTIFICATION_EMAIL=support@example.com
+UNSUBSCRIBE_SECRET=generate-a-long-random-secret
+NOTION_UNSUBSCRIBE_DATABASE_ID=your-notion-database-id
+```
+
+`UNSUBSCRIBE_SECRET` must remain server-only and stable after deployment;
+changing it invalidates existing unsubscribe links. If it is temporarily
+omitted, the server uses `NOTION_TOKEN` as the signing secret.
+
+A dedicated Notion unsubscribe database is recommended. It only requires a
+Title property. Optional columns are `Email` (Email), `Status` (Select),
+`Submitted At` (Date), and `Source` (URL). When
+`NOTION_UNSUBSCRIBE_DATABASE_ID` is blank, the current lead database is used
+as a temporary fallback and the full preference record is placed in the page
+body.
 
 ## Search discovery
 
