@@ -107,7 +107,7 @@ export class NodemailerLeadMailer implements LeadMailer {
       text: [
         `Thanks, ${lead.firstName}.`,
         "",
-        `We received your request about ${lead.productInterest}.`,
+        "We received your request.",
         "A member of our team will review it and reply within two business days.",
         "",
         "Your message:",
@@ -123,7 +123,7 @@ export class NodemailerLeadMailer implements LeadMailer {
         title: `Thanks, ${lead.firstName}. We’ll take it from here.`,
         unsubscribeUrl,
         content: `
-          <p style="margin:0 0 24px;color:#4e665f;font-size:16px;line-height:1.72">Hello ${escapeHtml(lead.firstName)}, your request about <strong style="color:#24483f">${escapeHtml(lead.productInterest)}</strong> is safely with our team. We’ll review the details and reply within two business days.</p>
+          <p style="margin:0 0 24px;color:#4e665f;font-size:16px;line-height:1.72">Hello ${escapeHtml(lead.firstName)}, your request is safely with our team. We’ll review the details and reply within two business days.</p>
           <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 28px;background:#f6f8f7;border:1px solid #e3e9e6;border-radius:13px">
             <tr><td style="padding:22px 24px">
               <p style="margin:0 0 9px;color:#294b43;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px">Your message</p>

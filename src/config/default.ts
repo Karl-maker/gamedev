@@ -15,7 +15,7 @@ export const defaultConfig: WebsiteConfig = {
     description: "Independent product intelligence for confident buying decisions.",
     url: "http://localhost:3000",
     email: "hello@northstarlabs.example",
-    phone: "+1 868 555 0142",
+    phone: "+1 868 742-2549",
     address: "Port of Spain, Trinidad and Tobago",
     logoUrl: "/logo.svg",
     faviconUrl: "/favicon.svg"
