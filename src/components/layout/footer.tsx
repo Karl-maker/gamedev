@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Facebook, Instagram, Linkedin, MessageCircle, Twitter } from "lucide-react";
+import { Facebook, Instagram, Linkedin, MessageCircle, ShieldCheck, Twitter } from "lucide-react";
+import { siAmericanexpress, siApplepay, siGooglepay, siMastercard, siVisa } from "simple-icons";
 import type { WebsiteConfig } from "@/config/schema";
 import { PrivacyChoices } from "@/components/privacy/privacy-choices";
 
@@ -22,6 +23,13 @@ const verifiedCredentials = [
     url: "https://www.credly.com/badges/11ca3d0c-09a7-4d4c-86a3-8ed9e9b2a9e1"
   }
 ];
+const paymentMarks = [
+  { name: "Visa", icon: siVisa },
+  { name: "Mastercard", icon: siMastercard },
+  { name: "American Express", icon: siAmericanexpress },
+  { name: "Apple Pay", icon: siApplepay },
+  { name: "Google Pay", icon: siGooglepay }
+];
 
 export function Footer({ config }: { config: WebsiteConfig }) {
   const socials = Object.entries(config.social).filter((entry): entry is [keyof typeof socialIcons, string] =>
@@ -36,6 +44,17 @@ export function Footer({ config }: { config: WebsiteConfig }) {
             <span>{config.company.name}</span>
           </Link>
           <p>{config.company.description}</p>
+          <div className="footer-payments">
+            <span className="footer-payment-label"><ShieldCheck size={14} /> Secure payments via Stripe</span>
+            <div className="payment-marks" aria-label="Supported payment brands">
+              {paymentMarks.map((mark) => (
+                <span className="payment-mark" key={mark.name} title={mark.name}>
+                  <svg viewBox="0 0 24 24" role="img" aria-label={mark.name}><path d={mark.icon.path} /></svg>
+                </span>
+              ))}
+            </div>
+            <small>Payment methods vary by country, device, and checkout configuration.</small>
+          </div>
           {socials.length > 0 && <div className="socials" aria-label="Social media">
             {socials.map(([name, href]) => {
               const Icon = socialIcons[name];
