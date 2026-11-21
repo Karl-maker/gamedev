@@ -11,13 +11,11 @@ type NotionProperty = {
   select?: { name: string } | null;
   multi_select?: { name: string }[];
   checkbox?: boolean;
-  url?: string | null;
   status?: { name: string } | null;
 };
 type NotionPage = {
   id: string;
   last_edited_time: string;
-  cover?: { type: "external" | "file"; external?: { url: string }; file?: { url: string } } | null;
   properties: Record<string, NotionProperty>;
 };
 
@@ -40,8 +38,6 @@ function mapPage(page: NotionPage, type: "blog" | "news"): ContentEntry | null {
   const published = property(page, "Published")?.checkbox;
   const unpublishedStatuses = ["draft", "unpublished", "private", "archived"];
   if (!title || !slug || published === false || (status && unpublishedStatuses.includes(status))) return null;
-  const coverProperty = property(page, "Cover", "Cover Image")?.url ?? undefined;
-  const pageCover = page.cover?.external?.url ?? page.cover?.file?.url;
   return {
     id: page.id,
     slug,
@@ -49,10 +45,66 @@ function mapPage(page: NotionPage, type: "blog" | "news"): ContentEntry | null {
     excerpt: text(property(page, "Excerpt", "Summary", "Description")),
     publishedAt: publishedAt ?? page.last_edited_time,
     updatedAt: page.last_edited_time,
-    cover: coverProperty ?? pageCover,
     tags: property(page, "Tags", "Categories")?.multi_select?.map((tag) => tag.name) ?? [],
     type
   };
+}
+
+function imageUrl(block: { type?: string; [key: string]: unknown }) {
+  if (block.type !== "image") return undefined;
+  const image = block.image as { external?: { url?: string }; file?: { url?: string } } | undefined;
+  return image?.external?.url ?? image?.file?.url;
+}
+
+async function getFirstImage(blockId: string): Promise<string | undefined> {
+  const notion = getNotionClient();
+  let cursor: string | undefined;
+  do {
+    const response = await notion.blocks.children.list({
+      block_id: blockId,
+      page_size: 100,
+      ...(cursor ? { start_cursor: cursor } : {})
+    });
+    for (const item of response.results) {
+      if (item.object !== "block" || !("type" in item)) continue;
+      const found = imageUrl(item);
+      if (found) return found;
+      if ("has_children" in item && item.has_children) {
+        const nested = await getFirstImage(item.id);
+        if (nested) return nested;
+      }
+    }
+    cursor = response.has_more && response.next_cursor ? response.next_cursor : undefined;
+  } while (cursor);
+  return undefined;
+}
+
+function firstImageInBlocks(blocks: ContentBlock[]): string | undefined {
+  for (const block of blocks) {
+    const found = imageUrl(block);
+    if (found) return found;
+    if (block.children) {
+      const nested = firstImageInBlocks(block.children);
+      if (nested) return nested;
+    }
+  }
+  return undefined;
+}
+
+async function mapWithConcurrency<T, R>(
+  items: T[],
+  concurrency: number,
+  transform: (item: T) => Promise<R>
+) {
+  const output = new Array<R>(items.length);
+  let nextIndex = 0;
+  await Promise.all(Array.from({ length: Math.min(concurrency, items.length) }, async () => {
+    while (nextIndex < items.length) {
+      const index = nextIndex++;
+      output[index] = await transform(items[index]);
+    }
+  }));
+  return output;
 }
 
 async function getBlocks(blockId: string): Promise<ContentBlock[]> {
@@ -76,7 +128,7 @@ async function getBlocks(blockId: string): Promise<ContentBlock[]> {
 }
 
 export class NotionContentRepository implements ContentRepository {
-  async list(type: "blog" | "news", limit = 12) {
+  private async listMetadata(type: "blog" | "news", limit = 12) {
     const databaseId = type === "blog" ? process.env.NOTION_BLOG_DATABASE_ID : process.env.NOTION_NEWS_DATABASE_ID;
     if (!databaseId || !process.env.NOTION_TOKEN) return [];
     const notion = getNotionClient();
@@ -104,10 +156,20 @@ export class NotionContentRepository implements ContentRepository {
       .slice(0, limit);
   }
 
+  async list(type: "blog" | "news", limit = 12) {
+    const entries = await this.listMetadata(type, limit);
+    return mapWithConcurrency(entries, 3, async (entry) => ({
+      ...entry,
+      cover: await getFirstImage(entry.id)
+    }));
+  }
+
   async findBySlug(type: "blog" | "news", slug: string) {
-    const entries = await this.list(type, 10_000);
+    const entries = await this.listMetadata(type, 10_000);
     const entry = entries.find((candidate) => candidate.slug === slug);
-    return entry ? { ...entry, blocks: await getBlocks(entry.id) } : null;
+    if (!entry) return null;
+    const blocks = await getBlocks(entry.id);
+    return { ...entry, cover: firstImageInBlocks(blocks), blocks };
   }
 }
 

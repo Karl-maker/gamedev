@@ -67,9 +67,11 @@ better SEO and editorial control:
 | Published At | Date | Used for publishing dates and sorting |
 | Status | Select or Status | Use `Draft` to hide an entry; `Published` or no status is visible |
 | Tags | Multi-select | Optional |
-| Cover | URL | Optional alternative to a page cover |
 
-Page blocks support paragraphs, headings, lists, quotes, callouts, dividers, code, images, and bookmarks. Use a separate database ID for news or leave `NOTION_NEWS_DATABASE_ID` blank.
+Page blocks support paragraphs, headings, lists, quotes, callouts, dividers,
+code, images, and bookmarks. Cards automatically use the first image block in
+the post as their preview; database and page covers are ignored. Use a separate
+database ID for news or leave `NOTION_NEWS_DATABASE_ID` blank.
 
 Content is fetched server-side, cached for five minutes, and rendered as semantic HTML. Browser clients receive the generated page, not the Notion token.
 

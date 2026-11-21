@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { NotionRenderer } from "./notion-renderer";
 import type { ContentEntry } from "@/lib/integrations/content/types";
@@ -34,5 +33,5 @@ export function ContentArticle({ entry }: { entry: ContentEntry }) {
       { "@type": "ListItem", position: 3, name: entry.title, item: articleUrl }
     ]
   };
-  return <article className="article"><header className="article-header container narrow"><Link className="eyebrow" href={`/${entry.type}`}>← {entry.type === "blog" ? "All insights" : "All news"}</Link><h1>{entry.title}</h1><p>{entry.excerpt}</p><div><time dateTime={entry.publishedAt}>{new Intl.DateTimeFormat("en", { dateStyle: "long" }).format(new Date(entry.publishedAt))}</time>{entry.tags.map((tag) => <span className="tag" key={tag}>{tag}</span>)}</div></header>{entry.cover && <div className="article-cover container"><Image unoptimized src={entry.cover} alt={`Cover image for ${entry.title}`} width={1400} height={780} priority /></div>}<div className="container prose">{entry.blocks && <NotionRenderer blocks={entry.blocks} />}</div><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs).replace(/</g, "\\u003c") }} /></article>;
+  return <article className="article"><header className="article-header container narrow"><Link className="eyebrow" href={`/${entry.type}`}>← {entry.type === "blog" ? "All insights" : "All news"}</Link><h1>{entry.title}</h1><p>{entry.excerpt}</p><div><time dateTime={entry.publishedAt}>{new Intl.DateTimeFormat("en", { dateStyle: "long" }).format(new Date(entry.publishedAt))}</time>{entry.tags.map((tag) => <span className="tag" key={tag}>{tag}</span>)}</div></header><div className="container prose">{entry.blocks && <NotionRenderer blocks={entry.blocks} />}</div><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs).replace(/</g, "\\u003c") }} /></article>;
 }
