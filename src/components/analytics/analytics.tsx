@@ -1,5 +1,6 @@
 "use client";
 
+import { Analytics as VercelAnalytics, track as trackVercelEvent } from "@vercel/analytics/react";
 import Script from "next/script";
 import { useEffect, useState } from "react";
 
@@ -22,18 +23,30 @@ export function Analytics() {
     return () => window.removeEventListener("consent-updated", sync);
   }, []);
 
+  if (!allowed) return null;
   const websiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
-  if (!allowed || !websiteId) return null;
   return (
-    <Script
-      src={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ?? "https://cloud.umami.is/script.js"}
-      data-website-id={websiteId}
-      strategy="afterInteractive"
-    />
+    <>
+      <VercelAnalytics />
+      {websiteId && (
+        <Script
+          src={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ?? "https://cloud.umami.is/script.js"}
+          data-website-id={websiteId}
+          strategy="afterInteractive"
+        />
+      )}
+    </>
   );
 }
 
 export function trackEvent(name: string, data?: Record<string, string>) {
+  try {
+    const consent = JSON.parse(localStorage.getItem(consentKey) ?? "{}") as Partial<Consent>;
+    if (consent.analytics !== true || navigator.doNotTrack === "1") return;
+  } catch {
+    return;
+  }
+  trackVercelEvent(name, data);
   const umami = (window as Window & { umami?: { track: (name: string, data?: Record<string, string>) => void } }).umami;
   umami?.track(name, data);
 }

@@ -93,7 +93,12 @@ Do not rename IDs mid-test. Create a new experiment ID so old and new results ca
 
 ## Analytics
 
-Umami was selected because it is open source and free to self-host. Set:
+Vercel Web Analytics is included through `@vercel/analytics` and activates
+after the visitor allows analytics. Enable Web Analytics for the project in the
+Vercel dashboard; no public token is required.
+
+Umami remains available as an optional open-source, self-hosted second
+provider. Set:
 
 ```dotenv
 NEXT_PUBLIC_UMAMI_WEBSITE_ID=your-site-id
