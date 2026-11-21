@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 64" role="img" aria-labelledby="title">
+  <title id="title">1Dev.ai</title>
+  <rect width="220" height="64" rx="12" fill="#ffffff"/>
+  <path d="M25 17h10v30H25zM41 24h11c10 0 17 4 17 12s-7 12-17 12H41zm10 7v10h2c4 0 6-2 6-5s-2-5-6-5z" fill="#103b32"/>
+  <text x="79" y="43" fill="#103b32" font-family="Arial, sans-serif" font-size="27" font-weight="700">1Dev.ai</text>
+</svg>
