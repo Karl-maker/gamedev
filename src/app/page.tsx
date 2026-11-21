@@ -15,6 +15,10 @@ const icons = { chart: BarChart3, layers: Layers3, file: FileText };
 export default async function Home() {
   const config = getWebsiteConfig();
   const latest = await listContent("blog", 3).catch(() => []);
+  const marqueeLogos = Array.from(
+    { length: config.trust.logos.length ? Math.max(1, Math.ceil(8 / config.trust.logos.length)) : 0 },
+    () => config.trust.logos
+  ).flat();
   const experiment = config.experiments.find((item) => item.id === "home-hero-message");
   return (
     <>
@@ -38,7 +42,22 @@ export default async function Home() {
         </div>
       </section>
       <section className="trust-strip">
-        <div className="container"><p>{config.trust.title}</p><div className="logo-track">{config.trust.logos.map((logo) => <span className={`trust-logo${logo.name.toLowerCase().includes("eislett technologies") ? " trust-logo-circle" : ""}`} key={logo.name}><Image src={logo.src} alt={`${logo.name} logo`} fill sizes="145px" /></span>)}</div></div>
+        <div className="container">
+          <p>{config.trust.title}</p>
+          <div className="logo-track" aria-label={config.trust.logos.map((logo) => logo.name).join(", ")}>
+            <div className="logo-track-inner" aria-hidden="true">
+              {[0, 1].map((set) => (
+                <div className="logo-track-set" key={set}>
+                  {marqueeLogos.map((logo, index) => (
+                    <span className={`trust-logo${logo.name.toLowerCase().includes("eislett technologies") ? " trust-logo-circle" : ""}`} key={`${set}-${logo.name}-${index}`}>
+                      <Image src={logo.src} alt="" fill sizes="145px" />
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
       <section className="section container">
         <div className="section-heading"><span className="eyebrow">What we do</span><h2>Services built around your operation</h2><p>{config.company.description}</p></div>

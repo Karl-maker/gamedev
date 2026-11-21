@@ -1,6 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import type { ContentBlock, ContentEntry, ContentRepository, RichText } from "@/lib/integrations/content/types";
+import { normalizeContentSlug } from "@/lib/integrations/content/slug";
 import { getNotionClient } from "./client";
 
 type NotionProperty = {
@@ -31,7 +32,7 @@ function property(page: NotionPage, ...names: string[]) {
 
 function mapPage(page: NotionPage, type: "blog" | "news"): ContentEntry | null {
   const title = text(property(page, "Title", "Name"));
-  const slug = text(property(page, "Slug")) || title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const slug = normalizeContentSlug(text(property(page, "Slug")), title);
   const publishedAt = property(page, "Published At", "Publish Date", "Date")?.date?.start;
   const statusProperty = property(page, "Status", "Publication Status");
   const status = (statusProperty?.status?.name ?? statusProperty?.select?.name)?.toLowerCase();
@@ -166,9 +167,18 @@ export class NotionContentRepository implements ContentRepository {
 
   async findBySlug(type: "blog" | "news", slug: string) {
     const entries = await this.listMetadata(type, 10_000);
-    const entry = entries.find((candidate) => candidate.slug === slug);
+    const normalizedSlug = normalizeContentSlug(slug);
+    const entry = entries.find((candidate) => candidate.slug === normalizedSlug);
     if (!entry) return null;
-    const blocks = await getBlocks(entry.id);
+    let blocks: ContentBlock[] = [];
+    try {
+      blocks = await getBlocks(entry.id);
+    } catch (error) {
+      if (process.env.NODE_ENV === "development") {
+        const message = error instanceof Error ? error.message : "Unknown Notion block error";
+        console.warn(`[Notion] ${type}/${normalizedSlug} blocks unavailable: ${message}`);
+      }
+    }
     return { ...entry, cover: firstImageInBlocks(blocks), blocks };
   }
 }
