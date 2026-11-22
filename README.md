@@ -12,6 +12,33 @@ npm run dev
 
 The default Northstar Labs demo works without Notion or SMTP. Publishing lists remain empty and the contact endpoint returns a friendly service-unavailable response until credentials are configured.
 
+## Send a Notion email campaign
+
+Campaign recipients come from a CSV file with required `email`, `industry`, and
+`skip` columns. `first_name`, `last_name`, and `last_sent` are supported, and
+any additional column can be used as a `{{placeholder}}` in the Notion page or
+subject. A `TRUE`/`YES`/`1` skip value prevents delivery. Industry matching is
+trimmed and case-insensitive.
+
+The Notion page title is the default subject. Its blocks become the body inside
+the same branded header and footer used by website email, including rich text,
+links, lists, images, tables, callouts, code, embeds, and nested blocks.
+
+```bash
+npm run email:campaign -- \
+  --csv ./recipients.csv \
+  --id YOUR_NOTION_PAGE_ID \
+  --industry Developer \
+  --base-url https://example.com \
+  --subject "Hello {{first_name}}" \
+  --dry-run
+```
+
+Remove `--dry-run` to deliver. The command uses `NOTION_TOKEN`, the existing
+`SMTP_*` variables, `SMTP_NEWSLETTER_FROM`, and `UNSUBSCRIBE_SECRET`.
+`--subject` is optional; `--eyebrow` and `--preheader` can also contain CSV
+placeholders.
+
 ## What is included
 
 - Typed `CONFIG_WEBSITE` JSON for brand, hero, about, services, customers, credentials, navigation, social links, and A/B tests

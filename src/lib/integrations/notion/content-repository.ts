@@ -1,6 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import type { ContentBlock, ContentEntry, ContentRepository, RichText } from "@/lib/integrations/content/types";
+import { personalizePublicContent } from "@/lib/integrations/content/personalization";
 import { normalizeContentSlug } from "@/lib/integrations/content/slug";
 import { getNotionClient } from "./client";
 
@@ -21,7 +22,9 @@ type NotionPage = {
 };
 
 const text = (property?: NotionProperty) =>
-  (property?.title ?? property?.rich_text ?? []).map((item) => item.plain_text).join("");
+  personalizePublicContent(
+    (property?.title ?? property?.rich_text ?? []).map((item) => item.plain_text).join("")
+  );
 
 function property(page: NotionPage, ...names: string[]) {
   const found = Object.entries(page.properties).find(([name]) =>

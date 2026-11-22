@@ -1,9 +1,10 @@
 import Image from "next/image";
+import { personalizePublicContent } from "@/lib/integrations/content/personalization";
 import type { ContentBlock, RichText } from "@/lib/integrations/content/types";
 
 function Rich({ items = [] }: { items?: RichText[] }) {
   return items.map((item, index) => {
-    let content: React.ReactNode = item.plain_text;
+    let content: React.ReactNode = personalizePublicContent(item.plain_text);
     if (item.annotations?.code) content = <code>{content}</code>;
     if (item.annotations?.bold) content = <strong>{content}</strong>;
     if (item.annotations?.italic) content = <em>{content}</em>;
@@ -35,7 +36,8 @@ function Block({ block }: { block: ContentBlock }) {
     case "image": {
       const image = data as { type?: string; external?: { url: string }; file?: { url: string }; caption?: RichText[] };
       const src = image?.external?.url ?? image?.file?.url;
-      return src ? <figure><Image unoptimized src={src} alt={image.caption?.map((x) => x.plain_text).join("") || "Article illustration"} width={1200} height={675} /><figcaption><Rich items={image.caption} /></figcaption></figure> : null;
+      const alt = personalizePublicContent(image.caption?.map((x) => x.plain_text).join("") || "Article illustration");
+      return src ? <figure><Image unoptimized src={src} alt={alt} width={1200} height={675} /><figcaption><Rich items={image.caption} /></figcaption></figure> : null;
     }
     case "bookmark": {
       const url = String(data?.url ?? "");

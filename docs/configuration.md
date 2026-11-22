@@ -115,6 +115,7 @@ branded HTML, support/privacy links, and a signed unsubscribe URL.
 
 ```dotenv
 SMTP_FROM="Example Support <support@example.com>"
+SMTP_NEWSLETTER_FROM="Example Newsletter <newsletter@example.com>"
 LEAD_NOTIFICATION_EMAIL=support@example.com
 UNSUBSCRIBE_SECRET=generate-a-long-random-secret
 NOTION_UNSUBSCRIBE_DATABASE_ID=your-notion-database-id
