@@ -3,6 +3,13 @@ import type { WebsiteConfig } from "@/config/schema";
 
 export function TestimonialsSection({ config }: { config: WebsiteConfig["testimonials"] }) {
   if (!config.enabled || !config.items.length) return null;
+  const layoutClass =
+    config.items.length === 1
+      ? " testimonial-grid--single"
+      : config.items.length === 2
+        ? " testimonial-grid--double"
+        : "";
+
   return (
     <section className="section testimonial-section">
       <div className="container">
@@ -11,7 +18,7 @@ export function TestimonialsSection({ config }: { config: WebsiteConfig["testimo
           <h2>{config.title}</h2>
           <p>{config.description}</p>
         </div>
-        <div className="testimonial-grid">
+        <div className={`testimonial-grid${layoutClass}`}>
           {config.items.map((item) => (
             <figure key={`${item.name}-${item.company}`}>
               <Quote aria-hidden="true" />

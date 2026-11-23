@@ -131,13 +131,25 @@ button { cursor: pointer; }
 .testimonial-section .section-heading .eyebrow { color: #f2ad8f; }
 .testimonial-section .section-heading p { color: #bcd0c9; }
 .testimonial-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; }
-.testimonial-grid figure { position: relative; display: flex; flex-direction: column; min-height: 330px; margin: 0; padding: 34px; overflow: hidden; border: 1px solid rgba(255,255,255,.13); border-radius: 18px; background: rgba(255,255,255,.055); }
+.testimonial-grid figure { position: relative; isolation: isolate; display: flex; flex-direction: column; min-height: 330px; margin: 0; padding: 34px; overflow: hidden; border: 1px solid rgba(255,255,255,.13); border-radius: 18px; background: rgba(255,255,255,.055); }
 .testimonial-grid figure > svg { width: 28px; color: #f2ad8f; opacity: .9; }
 .testimonial-result { align-self: start; margin-top: 25px; padding: 7px 10px; color: #f7c0aa; background: rgba(207,104,72,.14); border: 1px solid rgba(242,173,143,.19); border-radius: 100px; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
 .testimonial-grid blockquote { flex: 1; margin: 22px 0 32px; color: #eef5f2; font-family: var(--font-display); font-size: 18px; line-height: 1.6; letter-spacing: -.02em; }
 .testimonial-grid figcaption { display: grid; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); }
 .testimonial-grid figcaption strong { font-size: 13px; }
 .testimonial-grid figcaption span { margin-top: 3px; color: #9fbbb1; font-size: 11px; }
+.testimonial-grid--double { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.testimonial-grid--double figure { min-height: 390px; padding: clamp(34px, 4vw, 50px); background: linear-gradient(145deg, rgba(255,255,255,.085), rgba(255,255,255,.035)); }
+.testimonial-grid--double blockquote { max-width: 520px; font-size: clamp(21px, 2.2vw, 28px); line-height: 1.45; }
+.testimonial-grid--single { grid-template-columns: 1fr; }
+.testimonial-grid--single figure { min-height: 430px; padding: clamp(38px, 6vw, 72px); border-color: rgba(242,173,143,.24); background: radial-gradient(circle at 90% 15%, rgba(242,173,143,.16), transparent 29%), linear-gradient(130deg, rgba(255,255,255,.095), rgba(255,255,255,.025)); box-shadow: 0 28px 70px rgba(4,20,16,.2); }
+.testimonial-grid--single figure::after { content: "“"; position: absolute; z-index: -1; top: -80px; right: clamp(22px, 6vw, 80px); color: rgba(255,255,255,.045); font-family: Georgia, serif; font-size: clamp(260px, 34vw, 470px); line-height: 1; pointer-events: none; }
+.testimonial-grid--single figure > svg { width: 42px; height: 42px; }
+.testimonial-grid--single .testimonial-result { margin-top: 32px; padding: 9px 13px; font-size: 11px; }
+.testimonial-grid--single blockquote { max-width: 950px; margin: clamp(28px, 4vw, 48px) 0; font-size: clamp(29px, 4.2vw, 52px); font-weight: 610; line-height: 1.16; letter-spacing: -.045em; text-wrap: balance; }
+.testimonial-grid--single figcaption { width: min(100%, 430px); padding-top: 24px; }
+.testimonial-grid--single figcaption strong { font-size: 16px; }
+.testimonial-grid--single figcaption span { margin-top: 6px; font-size: 12px; }
 .faq-section { background: var(--cream); }
 .faq-layout { display: grid; grid-template-columns: .75fr 1.25fr; align-items: start; gap: clamp(60px, 8vw, 110px); }
 .faq-intro { position: sticky; top: 120px; }
@@ -395,8 +407,10 @@ button { cursor: pointer; }
   .service-grid, .content-grid { grid-template-columns: repeat(2, 1fr); }
   .process-grid { grid-template-columns: repeat(2, 1fr); }
   .process-grid::before { display: none; }
-  .testimonial-grid { grid-template-columns: 1fr; }
+  .testimonial-grid, .testimonial-grid--double { grid-template-columns: 1fr; }
   .testimonial-grid figure { min-height: 0; }
+  .testimonial-grid--single figure { padding: 38px 30px; }
+  .testimonial-grid--single blockquote { font-size: clamp(27px, 7vw, 40px); }
   .faq-layout { grid-template-columns: 1fr; gap: 40px; }
   .faq-intro { position: static; }
   .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
