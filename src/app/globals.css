@@ -85,6 +85,9 @@ button { cursor: pointer; }
 .logo-track-inner { display: flex; width: max-content; will-change: transform; animation: logo-marquee 30s linear infinite; }
 .logo-track-set { display: flex; flex: none; align-items: center; gap: 54px; padding-right: 54px; }
 .logo-track:hover .logo-track-inner { animation-play-state: paused; }
+.logo-track--static { -webkit-mask-image: none; mask-image: none; }
+.logo-track--static .logo-track-inner { width: 100%; justify-content: center; animation: none; will-change: auto; }
+.logo-track--static .logo-track-set { justify-content: center; padding-right: 0; }
 .trust-logo { position: relative; display: grid; place-items: center; flex: 0 0 auto; width: 145px; height: 50px; }
 .logo-track img { filter: grayscale(1); opacity: .54; object-fit: contain; transition: opacity .2s, filter .2s; }
 .logo-track img:hover { filter: grayscale(0); opacity: .85; }

@@ -22,6 +22,10 @@ export default async function Home() {
     { length: config.trust.logos.length ? Math.max(1, Math.ceil(8 / config.trust.logos.length)) : 0 },
     () => config.trust.logos
   ).flat();
+  const staticLogos = config.trust.logos.length < 3;
+  const logoSets = staticLogos
+    ? [config.trust.logos]
+    : [marqueeLogos, marqueeLogos];
   const experiment = config.experiments.find((item) => item.id === "home-hero-message");
   return (
     <>
@@ -47,11 +51,11 @@ export default async function Home() {
       <section className="trust-strip">
         <div className="container">
           <p>{config.trust.title}</p>
-          <div className="logo-track" aria-label={config.trust.logos.map((logo) => logo.name).join(", ")}>
+          <div className={`logo-track${staticLogos ? " logo-track--static" : ""}`} aria-label={config.trust.logos.map((logo) => logo.name).join(", ")}>
             <div className="logo-track-inner" aria-hidden="true">
-              {[0, 1].map((set) => (
+              {logoSets.map((logos, set) => (
                 <div className="logo-track-set" key={set}>
-                  {marqueeLogos.map((logo, index) => (
+                  {logos.map((logo, index) => (
                     <span className={`trust-logo${logo.name.toLowerCase().includes("eislett technologies") ? " trust-logo-circle" : ""}`} key={`${set}-${logo.name}-${index}`}>
                       <Image src={logo.src} alt="" fill sizes="145px" />
                     </span>
