@@ -5,6 +5,9 @@ import { ContentCard } from "@/components/content/content-card";
 import { HeroCta, HeroHeading } from "@/components/experiments/hero-copy";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { Collaborators } from "@/components/sections/collaborators";
+import { FaqSection } from "@/components/sections/faq";
+import { ProcessSection } from "@/components/sections/process";
+import { TestimonialsSection } from "@/components/sections/testimonials";
 import { getWebsiteConfig } from "@/config";
 import { listContent } from "@/lib/integrations/notion/content-repository";
 
@@ -69,6 +72,7 @@ export default async function Home() {
           <div><span className="eyebrow">Why {config.company.name}</span><h2>{config.about.title}</h2><p>{config.about.description}</p><ul className="check-list">{config.about.points.map((point) => <li key={point}><Check /> {point}</li>)}</ul><Link className="button button-secondary" href="/about">Meet the approach</Link></div>
         </div>
       </section>
+      <ProcessSection config={config.process} />
       <section className="achievement-section">
         <div className="container achievement-shell">
           <div className="achievement-copy">
@@ -98,7 +102,9 @@ export default async function Home() {
         </div>
       </section>
       <Collaborators config={config.collaborators} />
+      <TestimonialsSection config={config.testimonials} />
       {latest.length > 0 && <section className="section container"><div className="section-heading row-heading"><div><span className="eyebrow">Latest thinking</span><h2>Evidence for better decisions</h2></div><Link className="text-link" href="/blog">View all insights →</Link></div><div className="content-grid">{latest.map((entry) => <ContentCard key={entry.id} entry={entry} />)}</div></section>}
+      <FaqSection config={config.faq} />
       <ContactCta config={config} />
     </>
   );

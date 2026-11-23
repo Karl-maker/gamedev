@@ -21,6 +21,10 @@ export function getRuntimeWebsiteConfig(): WebsiteConfig {
   const trustLogos = parseJson(process.env.TRUST_LOGOS_CONFIG, "TRUST_LOGOS_CONFIG");
   const trust = parseJson(process.env.TRUST_CONFIG, "TRUST_CONFIG");
   const contact = parseJson(process.env.CONTACT_CONFIG, "CONTACT_CONFIG");
+  const processConfig = parseJson(process.env.PROCESS_CONFIG, "PROCESS_CONFIG");
+  const faq = parseJson(process.env.FAQ_CONFIG, "FAQ_CONFIG");
+  const testimonials = parseJson(process.env.TESTIMONIAL_CONFIG, "TESTIMONIAL_CONFIG");
+  const seo = parseJson(process.env.SEO_CONFIG, "SEO_CONFIG");
   const experiments = parseJson(process.env.EXPERIMENTS_CONFIG, "EXPERIMENTS_CONFIG");
   const target = parseJson(process.env.TARGET_CONFIG, "TARGET_CONFIG");
   const legal = parseJson(process.env.LEGAL_CONFIG, "LEGAL_CONFIG");
@@ -49,6 +53,10 @@ export function getRuntimeWebsiteConfig(): WebsiteConfig {
       }
     } : {}),
     ...(contact && typeof contact === "object" ? { contact: { ...base.contact, ...contact } } : {}),
+    ...(processConfig && typeof processConfig === "object" ? { process: { ...base.process, ...processConfig } } : {}),
+    ...(faq && typeof faq === "object" ? { faq: { ...base.faq, ...faq } } : {}),
+    ...(testimonials && typeof testimonials === "object" ? { testimonials: { ...base.testimonials, ...testimonials } } : {}),
+    ...(seo && typeof seo === "object" ? { seo: { ...base.seo, ...seo } } : {}),
     ...(Array.isArray(experiments) ? { experiments } : {}),
     ...(target ? { target } : {}),
     ...(legal ? { legal } : {})

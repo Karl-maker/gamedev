@@ -3,7 +3,7 @@ import { getWebsiteConfig } from "@/config";
 export default function robots(): MetadataRoute.Robots {
   const url = getWebsiteConfig().company.url.replace(/\/$/, "");
   return {
-    rules: { userAgent: "*", allow: "/", disallow: ["/api/", "/_next/"] },
+    rules: { userAgent: "*", allow: "/", disallow: ["/api/"] },
     sitemap: `${url}/sitemap.xml`,
     host: url
   };

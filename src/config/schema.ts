@@ -2,6 +2,53 @@ import { z } from "zod";
 
 const imageSchema = z.object({ src: z.string(), alt: z.string().min(8) });
 const linkSchema = z.object({ label: z.string(), href: z.string() });
+const processDefaults = {
+  enabled: true,
+  eyebrow: "A clear path forward",
+  title: "From operational friction to a working system",
+  description: "A focused, collaborative process keeps the work grounded in real needs and gives your team visibility from the first conversation to launch.",
+  steps: [
+    { title: "Understand the operation", description: "We map the people, decisions, information and bottlenecks that shape the work today." },
+    { title: "Define the right outcome", description: "Together, we agree what success looks like and which improvements matter most." },
+    { title: "Build and validate", description: "We deliver in focused stages, testing the system with the people who will actually use it." },
+    { title: "Launch and improve", description: "Your team gets a clear handover, practical support and a path for measured improvement." }
+  ],
+  cta: { label: "Discuss your workflow", href: "/contact" }
+};
+const faqDefaults = {
+  enabled: true,
+  eyebrow: "Common questions",
+  title: "What teams usually want to know",
+  description: "Straight answers about how a focused digital engagement begins and what your team can expect.",
+  items: [
+    { question: "What kinds of workflows can you help improve?", answer: "We focus on operational work that depends on repeated decisions, handoffs, information gathering, reporting or coordination. The first step is understanding the bottleneck, not prescribing a particular technology." },
+    { question: "Can you work with the tools we already use?", answer: "Yes. We assess the systems, data and constraints already in place, then recommend whether integration, automation or a focused custom system is the most practical route." },
+    { question: "How does an engagement begin?", answer: "It starts with a conversation about the current process, the people affected and the outcome you need. We then define a sensible first scope before any build begins." },
+    { question: "Will our team be involved during development?", answer: "Yes. Regular review points keep the solution aligned with real users and reduce surprises at launch. The people closest to the work provide essential context throughout." },
+    { question: "What happens after launch?", answer: "The engagement includes a clear handover and agreed support approach. We can also help measure results, refine the workflow and plan the next useful improvement." }
+  ]
+};
+const testimonialDefaults = {
+  enabled: false,
+  eyebrow: "Client perspective",
+  title: "What teams say about working with us",
+  description: "Verified client feedback can be displayed here.",
+  items: [] as Array<{ quote: string; name: string; role: string; company: string; result?: string }>
+};
+const seoDefaults = {
+  locale: "en_TT",
+  keywords: [
+    "custom software development",
+    "workflow automation",
+    "business process improvement",
+    "systems integration",
+    "operational software"
+  ],
+  areaServed: ["Trinidad and Tobago", "Caribbean", "International"],
+  knowsAbout: ["Custom software", "Workflow automation", "Systems integration", "Operational reporting"],
+  contactType: "sales and customer support",
+  googleSiteVerification: ""
+};
 const legalDefaults = {
   effectiveDate: "21 November 2026",
   privacyEmail: "privacy@northstarlabs.example",
@@ -188,6 +235,48 @@ export const websiteConfigSchema = z.object({
     z.object({ name: z.string(), imageUrl: z.string(), url: z.string().url() })
   ),
   contact: z.object({ title: z.string(), description: z.string() }),
+  process: z.object({
+    enabled: z.boolean().default(true),
+    eyebrow: z.string(),
+    title: z.string(),
+    description: z.string(),
+    steps: z.array(z.object({
+      title: z.string().min(1),
+      description: z.string().min(1)
+    })).min(3).max(6),
+    cta: linkSchema
+  }).default(processDefaults),
+  faq: z.object({
+    enabled: z.boolean().default(true),
+    eyebrow: z.string(),
+    title: z.string(),
+    description: z.string(),
+    items: z.array(z.object({
+      question: z.string().min(1),
+      answer: z.string().min(1)
+    })).min(1)
+  }).default(faqDefaults),
+  testimonials: z.object({
+    enabled: z.boolean().default(false),
+    eyebrow: z.string(),
+    title: z.string(),
+    description: z.string(),
+    items: z.array(z.object({
+      quote: z.string().min(1),
+      name: z.string().min(1),
+      role: z.string().min(1),
+      company: z.string().min(1),
+      result: z.string().min(1).optional()
+    }))
+  }).default(testimonialDefaults),
+  seo: z.object({
+    locale: z.string().min(2),
+    keywords: z.array(z.string().min(1)),
+    areaServed: z.array(z.string().min(1)),
+    knowsAbout: z.array(z.string().min(1)),
+    contactType: z.string().min(1),
+    googleSiteVerification: z.string()
+  }).default(seoDefaults),
   social: z
     .object({
       linkedin: z.string(),

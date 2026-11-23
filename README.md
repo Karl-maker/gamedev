@@ -51,12 +51,15 @@ placeholders.
 - SEO metadata, canonical URLs, dynamic sitemap, robots rules, Open Graph image, and JSON-LD
 - Privacy/cookie/terms templates, abuse controls, security headers, and privacy tests
 - Responsive, accessible business design using optimized Pexels images
+- Configurable process, FAQ and verified-testimonial sections
+- Page-specific social metadata and expanded service/entity structured data
 
 ## Documentation
 
 - [Configuration](docs/configuration.md)
 - [Notion setup](docs/notion-setup.md)
 - [SEO and publishing](docs/seo-and-content.md)
+- [SEO and professional website audit](docs/seo-and-conversion-audit.md)
 - [Privacy and GDPR launch checklist](docs/privacy-and-gdpr.md)
 - [Architecture](docs/architecture.md)
 

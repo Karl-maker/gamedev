@@ -15,11 +15,14 @@ export const metadata: Metadata = {
   metadataBase: new URL(config.company.url),
   title: { default: `${config.company.name} | ${config.hero.eyebrow}`, template: `%s | ${config.company.name}` },
   description: config.company.description,
+  keywords: config.seo.keywords,
   applicationName: config.company.name,
   authors: [{ name: config.company.name, url: config.company.url }],
   creator: config.company.name,
   publisher: config.company.legalName,
   category: "business",
+  classification: "Business software and technology services",
+  formatDetection: { email: false, address: false, telephone: false },
   alternates: {
     canonical: "/",
     types: { "application/rss+xml": [{ url: "/feed.xml", title: `${config.company.name} articles and news` }] }
@@ -29,12 +32,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: config.company.name,
+    locale: config.seo.locale,
     title: config.company.name,
     description: config.company.description,
     url: "/",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: config.company.name }]
   },
-  twitter: { card: "summary_large_image", title: config.company.name, description: config.company.description, images: ["/opengraph-image"] }
+  twitter: { card: "summary_large_image", title: config.company.name, description: config.company.description, images: ["/opengraph-image"] },
+  ...(config.seo.googleSiteVerification ? { verification: { google: config.seo.googleSiteVerification } } : {})
 };
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#133d34", colorScheme: "light" };
@@ -51,7 +56,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     email: config.company.email,
     telephone: config.company.phone,
     address: config.company.address,
-    sameAs: Object.values(config.social).filter(Boolean)
+    sameAs: Object.values(config.social).filter(Boolean),
+    areaServed: config.seo.areaServed,
+    knowsAbout: config.seo.knowsAbout,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: config.seo.contactType,
+      email: config.company.email,
+      telephone: config.company.phone,
+      areaServed: config.seo.areaServed,
+      availableLanguage: ["English"]
+    }
   };
   const website = {
     "@context": "https://schema.org",
@@ -59,6 +74,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     name: config.company.name,
     url: config.company.url,
     description: config.company.description,
+    inLanguage: config.seo.locale.replace("_", "-"),
+    "@id": `${config.company.url.replace(/\/$/, "")}/#website`,
     publisher: { "@id": `${config.company.url.replace(/\/$/, "")}/#organization` }
   };
   return (

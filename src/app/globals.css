@@ -114,6 +114,45 @@ button { cursor: pointer; }
 .check-list { list-style: none; padding: 0; margin: 28px 0 34px; display: grid; gap: 14px; }
 .check-list li { display: flex; gap: 11px; align-items: center; font-size: 14px; font-weight: 640; }
 .check-list svg { padding: 3px; border-radius: 50%; background: #cde8dd; color: var(--forest); }
+.process-section { overflow: hidden; background: linear-gradient(180deg, #fff, #fbfaf7); border-bottom: 1px solid rgba(220,229,224,.7); }
+.process-grid { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; margin: 0; padding: 0; list-style: none; counter-reset: process; }
+.process-grid::before { content: ""; position: absolute; top: 46px; left: 8%; right: 8%; height: 1px; background: linear-gradient(90deg, transparent, #cbd9d3 12%, #cbd9d3 88%, transparent); }
+.process-grid li { position: relative; min-width: 0; }
+.process-card { position: relative; height: 100%; padding: 29px 27px 31px; border: 1px solid var(--line); border-radius: 17px; background: rgba(255,255,255,.94); box-shadow: 0 10px 32px rgba(20,42,37,.045); }
+.process-card-top { display: flex; align-items: center; justify-content: space-between; }
+.process-icon { position: relative; z-index: 1; display: grid; place-items: center; width: 48px; height: 48px; color: var(--forest-2); background: #eef5f1; border: 1px solid #d8e5df; border-radius: 14px; box-shadow: 0 0 0 8px #fff; }
+.process-icon svg { width: 21px; }
+.process-number { color: #9aaca5; font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; }
+.process-card h3 { margin: 28px 0 10px; font-family: var(--font-display); font-size: 20px; font-weight: 620; line-height: 1.25; letter-spacing: -.035em; }
+.process-card p { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.72; }
+.process-action { display: flex; justify-content: center; margin-top: 38px; }
+.process-action .button { gap: 9px; }
+.testimonial-section { background: var(--forest); color: var(--white); }
+.testimonial-section .section-heading .eyebrow { color: #f2ad8f; }
+.testimonial-section .section-heading p { color: #bcd0c9; }
+.testimonial-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; }
+.testimonial-grid figure { position: relative; display: flex; flex-direction: column; min-height: 330px; margin: 0; padding: 34px; overflow: hidden; border: 1px solid rgba(255,255,255,.13); border-radius: 18px; background: rgba(255,255,255,.055); }
+.testimonial-grid figure > svg { width: 28px; color: #f2ad8f; opacity: .9; }
+.testimonial-result { align-self: start; margin-top: 25px; padding: 7px 10px; color: #f7c0aa; background: rgba(207,104,72,.14); border: 1px solid rgba(242,173,143,.19); border-radius: 100px; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
+.testimonial-grid blockquote { flex: 1; margin: 22px 0 32px; color: #eef5f2; font-family: var(--font-display); font-size: 18px; line-height: 1.6; letter-spacing: -.02em; }
+.testimonial-grid figcaption { display: grid; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.12); }
+.testimonial-grid figcaption strong { font-size: 13px; }
+.testimonial-grid figcaption span { margin-top: 3px; color: #9fbbb1; font-size: 11px; }
+.faq-section { background: var(--cream); }
+.faq-layout { display: grid; grid-template-columns: .75fr 1.25fr; align-items: start; gap: clamp(60px, 8vw, 110px); }
+.faq-intro { position: sticky; top: 120px; }
+.faq-intro h2 { margin: 16px 0 18px; font-family: var(--font-display); font-size: clamp(36px, 4vw, 50px); font-weight: 600; line-height: 1.09; letter-spacing: -.045em; text-wrap: balance; }
+.faq-intro p { color: var(--muted); line-height: 1.78; }
+.faq-list { border-top: 1px solid #ccd8d3; }
+.faq-list details { border-bottom: 1px solid #ccd8d3; }
+.faq-list summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 25px 2px; cursor: pointer; list-style: none; font-family: var(--font-display); font-size: 17px; font-weight: 610; line-height: 1.45; letter-spacing: -.025em; }
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary:hover { color: var(--forest-2); }
+.faq-toggle { position: relative; flex: 0 0 28px; width: 28px; height: 28px; border: 1px solid #c7d4ce; border-radius: 50%; background: rgba(255,255,255,.7); }
+.faq-toggle::before, .faq-toggle::after { content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 1.5px; background: var(--forest); transform: translate(-50%,-50%); transition: transform .2s; }
+.faq-toggle::after { transform: translate(-50%,-50%) rotate(90deg); }
+.faq-list details[open] .faq-toggle::after { transform: translate(-50%,-50%) rotate(0); }
+.faq-list details p { max-width: 700px; margin: -5px 48px 25px 2px; color: var(--muted); font-size: 14px; line-height: 1.78; }
 .row-heading { max-width: none; display: flex; align-items: end; justify-content: space-between; text-align: left; }
 .row-heading h2 { margin-bottom: 0; }
 .achievement-section { overflow: hidden; padding: 112px 0; background: #fff; }
@@ -354,6 +393,12 @@ button { cursor: pointer; }
   .hero { padding-top: 62px; }
   .hero-media { height: 470px; }
   .service-grid, .content-grid { grid-template-columns: repeat(2, 1fr); }
+  .process-grid { grid-template-columns: repeat(2, 1fr); }
+  .process-grid::before { display: none; }
+  .testimonial-grid { grid-template-columns: 1fr; }
+  .testimonial-grid figure { min-height: 0; }
+  .faq-layout { grid-template-columns: 1fr; gap: 40px; }
+  .faq-intro { position: static; }
   .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
   .footer-grid > div:last-child { grid-column: 1 / -1; }
   .achievement-shell { grid-template-columns: 1fr; }
@@ -376,6 +421,7 @@ button { cursor: pointer; }
   .floating-card { left: 12px; }
   .button-row, .cookie-banner { flex-direction: column; align-items: stretch; }
   .service-grid, .content-grid, .form-row { grid-template-columns: 1fr; }
+  .process-grid { grid-template-columns: 1fr; }
   .section { padding-block: 80px; }
   .logo-track { margin-inline: -14px; }
   .achievement-section { padding: 74px 0; }

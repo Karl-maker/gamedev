@@ -4,7 +4,7 @@ import type { ContentEntry } from "@/lib/integrations/content/types";
 import { getWebsiteConfig } from "@/config";
 
 export function ContentArticle({ entry }: { entry: ContentEntry }) {
-  const { company } = getWebsiteConfig();
+  const { company, seo } = getWebsiteConfig();
   const base = company.url.replace(/\/$/, "");
   const articleUrl = `${base}/${entry.type}/${entry.slug}`;
   const schema = {
@@ -12,6 +12,8 @@ export function ContentArticle({ entry }: { entry: ContentEntry }) {
     "@type": entry.type === "news" ? "NewsArticle" : "BlogPosting",
     headline: entry.title,
     description: entry.excerpt,
+    inLanguage: seo.locale.replace("_", "-"),
+    keywords: entry.tags.join(", "),
     image: entry.cover ? [entry.cover] : undefined,
     datePublished: entry.publishedAt,
     dateModified: entry.updatedAt,

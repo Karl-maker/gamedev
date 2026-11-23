@@ -9,7 +9,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const entry = await getContent("blog", slug).catch(() => null);
   if (!entry) return {};
-  return { title: entry.title, description: entry.excerpt, keywords: entry.tags, authors: [{ name: getWebsiteConfig().company.name }], alternates: { canonical: `/blog/${slug}` }, openGraph: { type: "article", title: entry.title, description: entry.excerpt, publishedTime: entry.publishedAt, modifiedTime: entry.updatedAt, tags: entry.tags, images: entry.cover ? [{ url: entry.cover, alt: `Cover image for ${entry.title}` }] : undefined } };
+  const config = getWebsiteConfig();
+  const image = entry.cover ? [{ url: entry.cover, alt: `Cover image for ${entry.title}` }] : [{ url: "/opengraph-image", alt: config.company.name }];
+  return { title: entry.title, description: entry.excerpt, keywords: [...new Set([...entry.tags, ...config.seo.keywords])], authors: [{ name: config.company.name, url: config.company.url }], alternates: { canonical: `/blog/${slug}` }, openGraph: { type: "article", locale: config.seo.locale, siteName: config.company.name, url: `/blog/${slug}`, title: entry.title, description: entry.excerpt, publishedTime: entry.publishedAt, modifiedTime: entry.updatedAt, tags: entry.tags, images: image }, twitter: { card: "summary_large_image", title: entry.title, description: entry.excerpt, images: [entry.cover || "/opengraph-image"] } };
 }
 export default async function BlogArticle({ params }: { params: Promise<{ slug: string }> }) {
   const entry = await getContent("blog", (await params).slug).catch(() => null);

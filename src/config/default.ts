@@ -141,6 +141,53 @@ export const defaultConfig: WebsiteConfig = {
     title: "Let’s make the next product decision easier",
     description: "Tell us what you are comparing. We’ll reply with a practical next step within two business days."
   },
+  process: {
+    enabled: true,
+    eyebrow: "A clear path forward",
+    title: "From operational friction to a working system",
+    description: "A focused, collaborative process keeps the work grounded in real needs and gives your team visibility from the first conversation to launch.",
+    steps: [
+      { title: "Understand the operation", description: "We map the people, decisions, information and bottlenecks that shape the work today." },
+      { title: "Define the right outcome", description: "Together, we agree what success looks like and which improvements matter most." },
+      { title: "Build and validate", description: "We deliver in focused stages, testing the system with the people who will actually use it." },
+      { title: "Launch and improve", description: "Your team gets a clear handover, practical support and a path for measured improvement." }
+    ],
+    cta: { label: "Discuss your workflow", href: "/contact" }
+  },
+  faq: {
+    enabled: true,
+    eyebrow: "Common questions",
+    title: "What teams usually want to know",
+    description: "Straight answers about how a focused digital engagement begins and what your team can expect.",
+    items: [
+      { question: "What kinds of workflows can you help improve?", answer: "We focus on operational work that depends on repeated decisions, handoffs, information gathering, reporting or coordination. The first step is understanding the bottleneck, not prescribing a particular technology." },
+      { question: "Can you work with the tools we already use?", answer: "Yes. We assess the systems, data and constraints already in place, then recommend whether integration, automation or a focused custom system is the most practical route." },
+      { question: "How does an engagement begin?", answer: "It starts with a conversation about the current process, the people affected and the outcome you need. We then define a sensible first scope before any build begins." },
+      { question: "Will our team be involved during development?", answer: "Yes. Regular review points keep the solution aligned with real users and reduce surprises at launch. The people closest to the work provide essential context throughout." },
+      { question: "What happens after launch?", answer: "The engagement includes a clear handover and agreed support approach. We can also help measure results, refine the workflow and plan the next useful improvement." }
+    ]
+  },
+  testimonials: {
+    enabled: false,
+    eyebrow: "Client perspective",
+    title: "What teams say about working with us",
+    description: "Verified client feedback can be displayed here.",
+    items: []
+  },
+  seo: {
+    locale: "en_TT",
+    keywords: [
+      "custom software development",
+      "workflow automation",
+      "business process improvement",
+      "systems integration",
+      "operational software"
+    ],
+    areaServed: ["Trinidad and Tobago", "Caribbean", "International"],
+    knowsAbout: ["Custom software", "Workflow automation", "Systems integration", "Operational reporting"],
+    contactType: "sales and customer support",
+    googleSiteVerification: ""
+  },
   social: {},
   navigation: [
     { label: "Services", href: "/services" },

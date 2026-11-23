@@ -121,6 +121,24 @@ UNSUBSCRIBE_SECRET=generate-a-long-random-secret
 NOTION_UNSUBSCRIBE_DATABASE_ID=your-notion-database-id
 ```
 
+## Homepage trust, process, and SEO
+
+New homepage sections follow the same one-line JSON override pattern as the
+existing brand configuration:
+
+- `PROCESS_CONFIG` controls the visible engagement steps and CTA.
+- `FAQ_CONFIG` controls visible questions and answers. Its structured data is
+  generated from the same content, so the markup cannot drift from the page.
+- `TESTIMONIAL_CONFIG` controls attributed client quotes and optional results.
+  It is disabled by default; only publish feedback you have permission to use.
+- `SEO_CONFIG` controls locale, target topics, areas served, organizational
+  expertise, contact type, and the optional Google Search Console verification
+  token.
+
+Each section supports an `enabled` flag. Complete examples are included in
+`.env.example`. FAQ structured data improves machine-readable context but does
+not guarantee a search-result enhancement.
+
 `UNSUBSCRIBE_SECRET` must remain server-only and stable after deployment;
 changing it invalidates existing unsubscribe links. If it is temporarily
 omitted, the server uses `NOTION_TOKEN` as the signing secret.
