@@ -253,7 +253,7 @@ export const listContent = unstable_cache(
       return [];
     }
   },
-  ["notion-content-list"],
+  ["notion-content-list-v2"],
   { revalidate: 300, tags: ["notion-content"] }
 );
 export const getContent = unstable_cache(
@@ -268,6 +268,6 @@ export const getContent = unstable_cache(
       return null;
     }
   },
-  ["notion-content-entry"],
+  ["notion-content-entry-v2"],
   { revalidate: 300, tags: ["notion-content"] }
 );

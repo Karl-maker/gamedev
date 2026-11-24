@@ -1,4 +1,5 @@
 import type { ContentBlock, RichText } from "./types";
+import { personalizePublicContent } from "./personalization";
 
 const summaryBlockTypes = new Set([
   "paragraph",
@@ -12,7 +13,9 @@ const summaryBlockTypes = new Set([
 ]);
 
 export function richTextValue(items: RichText[] = []) {
-  return items.map((item) => item.plain_text).join("").replace(/\s+/g, " ").trim();
+  return personalizePublicContent(items.map((item) => item.plain_text).join(""))
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 export function contentBlockText(block: ContentBlock, includeChildren = true): string {

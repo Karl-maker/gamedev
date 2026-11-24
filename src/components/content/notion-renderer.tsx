@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { personalizePublicContent } from "@/lib/integrations/content/personalization";
+import { personalizePublicContent, personalizePublicRichText } from "@/lib/integrations/content/personalization";
 import type { ContentBlock, RichText } from "@/lib/integrations/content/types";
 
 function Rich({ items = [] }: { items?: RichText[] }) {
-  return items.map((item, index) => {
-    let content: React.ReactNode = personalizePublicContent(item.plain_text);
+  return personalizePublicRichText(items).map((item, index) => {
+    let content: React.ReactNode = item.plain_text;
     if (item.annotations?.code) content = <code>{content}</code>;
     if (item.annotations?.bold) content = <strong>{content}</strong>;
     if (item.annotations?.italic) content = <em>{content}</em>;

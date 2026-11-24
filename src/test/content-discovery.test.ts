@@ -36,6 +36,20 @@ describe("content discovery helpers", () => {
     expect(contentSummary("A supplied summary", blocks, entry.title)).toBe("A supplied summary");
   });
 
+  it("personalizes first_name in article-derived summaries", () => {
+    const blocks: ContentBlock[] = [{
+      id: "paragraph-1",
+      type: "paragraph",
+      paragraph: {
+        rich_text: [
+          { plain_text: "Hi {{first_" },
+          { plain_text: "name}}, welcome to this update." }
+        ]
+      }
+    }];
+    expect(contentSummary("", blocks, entry.title)).toBe("Hi Reader, welcome to this update.");
+  });
+
   it("prioritizes related entries that share article tags", () => {
     const related = relatedContent(entry, [
       { ...entry, id: "different-1", slug: "newer", tags: ["Other"], publishedAt: "2026-11-23T12:00:00.000Z" },
