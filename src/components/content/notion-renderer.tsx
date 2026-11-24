@@ -18,10 +18,10 @@ function value(block: ContentBlock) {
   return block[block.type] as Record<string, unknown> | undefined;
 }
 
-function Block({ block }: { block: ContentBlock }) {
+function Block({ block, excludeImageUrl, articleTitle }: { block: ContentBlock; excludeImageUrl?: string; articleTitle?: string }) {
   const data = value(block);
   const rich = data?.rich_text as RichText[] | undefined;
-  const children = block.children?.length ? <NotionRenderer blocks={block.children} /> : null;
+  const children = block.children?.length ? <NotionRenderer blocks={block.children} excludeImageUrl={excludeImageUrl} articleTitle={articleTitle} /> : null;
   switch (block.type) {
     case "paragraph": return <p><Rich items={rich} />{children}</p>;
     case "heading_1": return <h2><Rich items={rich} /></h2>;
@@ -36,8 +36,10 @@ function Block({ block }: { block: ContentBlock }) {
     case "image": {
       const image = data as { type?: string; external?: { url: string }; file?: { url: string }; caption?: RichText[] };
       const src = image?.external?.url ?? image?.file?.url;
-      const alt = personalizePublicContent(image.caption?.map((x) => x.plain_text).join("") || "Article illustration");
-      return src ? <figure><Image unoptimized src={src} alt={alt} width={1200} height={675} /><figcaption><Rich items={image.caption} /></figcaption></figure> : null;
+      if (!src || src === excludeImageUrl) return null;
+      const caption = personalizePublicContent(image.caption?.map((x) => x.plain_text).join("") || "");
+      const alt = caption || `${articleTitle || "Article"} illustration`;
+      return <figure><Image unoptimized src={src} alt={alt} width={1200} height={675} />{caption && <figcaption><Rich items={image.caption} /></figcaption>}</figure>;
     }
     case "bookmark": {
       const url = String(data?.url ?? "");
@@ -47,7 +49,7 @@ function Block({ block }: { block: ContentBlock }) {
   }
 }
 
-export function NotionRenderer({ blocks }: { blocks: ContentBlock[] }) {
+export function NotionRenderer({ blocks, excludeImageUrl, articleTitle }: { blocks: ContentBlock[]; excludeImageUrl?: string; articleTitle?: string }) {
   const output: React.ReactNode[] = [];
   for (let index = 0; index < blocks.length; index++) {
     const block = blocks[index];
@@ -55,12 +57,12 @@ export function NotionRenderer({ blocks }: { blocks: ContentBlock[] }) {
       const type = block.type;
       const items = [];
       while (blocks[index]?.type === type) {
-        items.push(<Block key={blocks[index].id} block={blocks[index]} />);
+        items.push(<Block key={blocks[index].id} block={blocks[index]} excludeImageUrl={excludeImageUrl} articleTitle={articleTitle} />);
         index++;
       }
       index--;
       output.push(type === "bulleted_list_item" ? <ul key={block.id}>{items}</ul> : <ol key={block.id}>{items}</ol>);
-    } else output.push(<Block key={block.id} block={block} />);
+    } else output.push(<Block key={block.id} block={block} excludeImageUrl={excludeImageUrl} articleTitle={articleTitle} />);
   }
   return <div className="notion-content">{output}</div>;
 }

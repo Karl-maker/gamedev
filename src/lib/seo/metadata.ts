@@ -19,7 +19,10 @@ export function buildPageMetadata({
     title,
     description,
     keywords: [...new Set([...keywords, ...config.seo.keywords])],
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      types: { "application/rss+xml": [{ url: "/feed.xml", title: `${config.company.name} articles and news` }] }
+    },
     openGraph: {
       type: "website",
       locale: config.seo.locale,

@@ -25,6 +25,7 @@ export type ContentEntry = {
   publishedAt: string;
   updatedAt: string;
   cover?: string;
+  coverAlt?: string;
   tags: string[];
   type: "blog" | "news";
   blocks?: ContentBlock[];
