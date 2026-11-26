@@ -10,14 +10,14 @@ export const defaultConfig: WebsiteConfig = {
     tags: ["demo", "organic"]
   },
   company: {
-    name: "Northstar Labs",
-    legalName: "Northstar Labs Ltd.",
-    description: "Independent product intelligence for confident buying decisions.",
+    name: "Karl-Johan Bailey",
+    legalName: "Karl-Johan Bailey",
+    description: "Game developer and engine programmer working with Unreal Engine, Unity, C++, multiplayer systems and real-time 3D.",
     url: "http://localhost:3000",
-    email: "hello@northstarlabs.example",
-    phone: "+1 868 742-2549",
+    email: "portfolio@example.com",
+    phone: "",
     address: "Port of Spain, Trinidad and Tobago",
-    logoUrl: "/logo.svg",
+    logoUrl: "/favicon.svg",
     faviconUrl: "/favicon.svg"
   },
   legal: {

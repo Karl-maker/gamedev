@@ -6,7 +6,7 @@ import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { getWebsiteConfig } from "@/config";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
-const description = "Learn how Syncpoly designs custom digital systems around real operational workflows.";
+const description = "Learn about Karl-Johan Bailey's approach to game development, engine programming and real-time 3D.";
 export const metadata: Metadata = buildPageMetadata({ title: "About us", description, path: "/about", keywords: ["custom software company", "digital transformation partner"] });
 
 export default function AboutPage() {
