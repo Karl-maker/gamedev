@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowDownRight, ArrowUpRight, Boxes, Braces, CheckCircle2, Cpu,
   Database, Gamepad2, Gauge, Github, GitBranch, Layers3, Mountain,
@@ -11,9 +12,9 @@ import {
 import { portfolioConfig } from "@/config/portfolio";
 
 const unrealSystems = [
-  "Server-authoritative multiplayer", "C++ gameplay system scheduler",
-  "Typed event-bus architecture", "Layered animation pipeline",
-  "Combat, perception & AI systems", "Replicated player controls",
+  "Server-authoritative movement & combat", "Explicit C++ gameplay scheduler",
+  "Typed event-bus and actor registry", "Layered, request-driven animation",
+  "Perception, brain & action AI pipeline", "Replicated controls, stats & attack state",
 ];
 
 const engineFeatures = [
@@ -107,15 +108,18 @@ export default function Home() {
       <section className="game-project game-project-dark">
         <div className="game-container game-unreal-grid">
           <div className="game-unreal-copy">
-            <div className="game-project-heading"><div><span className="game-label">In development · Unreal Engine C++</span><h2>LATAMX Battle Zone</h2></div><span className="game-project-number">02</span></div>
-            <p className="game-project-lede">A multiplayer action project engineered around deterministic systems, authoritative gameplay and scalable C++ architecture.</p>
+            <div className="game-project-heading"><div><span className="game-label">New build · In development through 2028</span><h2>LATAMX Battle Zone</h2></div><span className="game-project-number">02</span></div>
+            <p className="game-project-lede">An ambitious Unreal Engine 5.8 multiplayer action world where magical characters, melee fighters and pirate crews are designed to share one authoritative battlefield. The current C++ build establishes the combat, AI, movement, animation and replication foundation needed to make that 2028 vision achievable.</p>
             <ul className="game-system-list">{unrealSystems.map((system) => <li key={system}><CheckCircle2 />{system}</li>)}</ul>
+            <div className="game-actions">
+              <Link className="game-button game-button-primary" href="/projects/latamx-battle-zone">Read the engineering case study <ArrowUpRight /></Link>
+            </div>
           </div>
           <div className="game-unreal-showcase">
             <a className="game-unreal-media" href={portfolioConfig.latamxRepoUrl} target="_blank" rel="noreferrer">
               <Image src="/portfolio/fortnite-blitz-royale.jpg" alt="Unreal Engine multiplayer visual reference for LATAMX Battle Zone" fill sizes="(max-width: 900px) 100vw, 56vw" />
-              <span><Github /> View LATAMX Battle Zone <ArrowUpRight /></span>
-              <small>Unreal multiplayer visual reference · Epic Games artwork</small>
+              <span><Github /> Explore the current C++ build <ArrowUpRight /></span>
+              <small>Visual reference · Epic Games artwork · project code is original work</small>
             </a>
             <div className="game-architecture-card">
               <div className="game-card-top"><span><Braces /> SYSTEM FLOW</span><i>UE C++</i></div>

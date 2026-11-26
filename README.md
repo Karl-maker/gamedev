@@ -57,6 +57,7 @@ placeholders.
 ## Documentation
 
 - [Configuration](docs/configuration.md)
+- [LATAMX Battle Zone engineering vision and 2028 build plan](docs/latamx-battle-zone.md)
 - [Notion setup](docs/notion-setup.md)
 - [SEO and publishing](docs/seo-and-content.md)
 - [SEO and professional website audit](docs/seo-and-conversion-audit.md)
