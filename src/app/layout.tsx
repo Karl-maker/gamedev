@@ -9,8 +9,8 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(portfolioConfig.baseUrl),
   title: { default: "Karl-Johan Bailey | Game Developer & Engine Programmer", template: "%s | Karl-Johan Bailey" },
-  description: "Game developer and engine programmer building polished experiences with Unreal Engine, Unity, C++, multiplayer systems, Blender and Maya.",
-  keywords: ["game developer", "Unreal Engine developer", "Unity developer", "C++ engine programmer", "multiplayer game developer", "Blender", "Maya"],
+  description: "Game developer, engine programmer and UEFN creator building polished experiences with Unreal Engine, Verse, Unity, C++, multiplayer systems, Blender and Maya.",
+  keywords: ["game developer", "UEFN developer", "Verse developer", "Fortnite Creative builder", "Unreal Engine developer", "Unity developer", "C++ engine programmer", "multiplayer game developer", "Blender", "Maya"],
   applicationName: "Karl-Johan Bailey — Game Portfolio",
   authors: [{ name: "Karl-Johan Bailey" }],
   creator: "Karl-Johan Bailey",
@@ -24,14 +24,14 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Karl-Johan Bailey — Game Developer",
     title: "Karl-Johan Bailey | Game Developer & Engine Programmer",
-    description: "Unreal Engine, Unity, multiplayer and custom C++ engine development.",
+    description: "Unreal Engine, UEFN, Verse, Unity, multiplayer and custom C++ engine development.",
     url: "/",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Karl-Johan Bailey game development portfolio" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Karl-Johan Bailey | Game Developer",
-    description: "Unreal Engine, Unity, multiplayer and custom C++ engine development.",
+    description: "Unreal Engine, UEFN, Verse, Unity, multiplayer and custom C++ engine development.",
     images: ["/opengraph-image"],
   },
 };
@@ -46,7 +46,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     url: portfolioConfig.baseUrl,
     sameAs: [portfolioConfig.githubUrl],
     jobTitle: "Game Developer and Engine Programmer",
-    knowsAbout: ["Unreal Engine", "Unity", "C++", "Multiplayer game development", "OpenGL", "Blender", "Autodesk Maya"],
+    knowsAbout: ["Unreal Engine", "Unreal Editor for Fortnite", "Verse programming", "Fortnite Creative", "Unity", "C++", "Multiplayer game development", "OpenGL", "Blender", "Autodesk Maya"],
   };
 
   return (

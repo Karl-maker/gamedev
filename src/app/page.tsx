@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowDownRight, ArrowUpRight, Boxes, Braces, CheckCircle2, Cpu,
+  ArrowDownRight, ArrowUpRight, Blocks, Boxes, Braces, CheckCircle2, Code2, Cpu,
   Database, Gamepad2, Gauge, Github, GitBranch, Layers3, Mountain,
-  Monitor, Network, PackageOpen, Palette, Play, Ship, Smartphone, Sparkles, Waves,
+  Map, Monitor, Network, PackageOpen, Palette, Play, Rocket, Ship, Smartphone, Sparkles, Waves,
 } from "lucide-react";
 import {
   siAppstore, siAutodeskmaya, siBlender, siCplusplus, siGoogleplay,
@@ -22,6 +22,13 @@ const engineFeatures = [
   "Entity Component System", "OpenGL + GLSL rendering",
   "Chunk-based world streaming", "Async mesh loading",
   "Terrain, water, fog & post FX", "Hot-reload development tools",
+];
+
+const uefnExperience = [
+  { icon: Code2, title: "Verse gameplay systems", copy: "Writing event-driven Verse logic for objectives, scoring, player state, rounds, interactions and reusable gameplay components." },
+  { icon: Blocks, title: "Creative device orchestration", copy: "Connecting built-in and custom devices into reliable game loops, triggers, encounters, UI feedback and multiplayer rules." },
+  { icon: Map, title: "Island & encounter building", copy: "Greyboxing spaces, composing environments, shaping traversal and pacing combat encounters around a clear player journey." },
+  { icon: Rocket, title: "Iteration & publishing readiness", copy: "Playtesting, profiling memory and performance, validating multiplayer behavior and preparing islands for Creator Portal review." },
 ];
 
 const engineDepth = [
@@ -69,9 +76,9 @@ export default function Home() {
         <div className="game-grid-overlay" />
         <div className="game-container game-hero-content">
           <div className="game-status"><span /> Available for game development projects</div>
-          <p className="game-kicker">Game developer · Engine programmer · 3D generalist</p>
+          <p className="game-kicker">Game developer · Engine programmer · UEFN creator · 3D generalist</p>
           <h1>I build worlds<br />worth playing.</h1>
-          <p className="game-hero-lede">Production-minded games and engine technology across Unreal Engine, Unity, C++, multiplayer systems and real-time 3D.</p>
+          <p className="game-hero-lede">Production-minded games and interactive worlds across Unreal Engine, UEFN, Verse, Unity, C++, multiplayer systems and real-time 3D.</p>
           <div className="game-actions">
             <a className="game-button game-button-primary" href="#work">Explore selected work <ArrowDownRight /></a>
             <a className="game-button game-button-ghost" href={portfolioConfig.githubUrl} target="_blank" rel="noreferrer"><Github /> GitHub profile</a>
@@ -105,7 +112,7 @@ export default function Home() {
 
       <section className="game-intro game-container">
         <p className="game-section-index">01 / Profile</p>
-        <div><h2>From the first line of engine code to the final player experience.</h2><p>I work across the full real-time stack: gameplay architecture, multiplayer, rendering, technical art, 3D pipelines and polished cross-platform delivery.</p></div>
+        <div><h2>From the first line of engine code to the final player experience.</h2><p>I work across the full real-time stack: gameplay architecture, multiplayer, UEFN and Verse development, rendering, technical art, 3D pipelines and polished cross-platform delivery.</p></div>
       </section>
 
       <section className="game-logo-wall" aria-label="Technology experience">
@@ -119,6 +126,31 @@ export default function Home() {
               </span>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="game-uefn">
+        <div className="game-container">
+          <div className="game-uefn-heading">
+            <div>
+              <span className="game-label">Fortnite creation · UEFN / Verse</span>
+              <h2>Building Fortnite experiences as complete game systems.</h2>
+            </div>
+            <div>
+              <p>I use Unreal Editor for Fortnite to move from island concept to playable multiplayer experience—combining Verse code, Creative devices, level design and rapid in-editor testing. The focus is not only visual building, but clear rules, readable objectives, reliable state and a game loop players understand immediately.</p>
+              <div className="game-uefn-toolbelt"><span>UEFN</span><span>Verse</span><span>Fortnite Creative</span><span>Sequencer</span><span>Niagara</span><span>World building</span></div>
+            </div>
+          </div>
+          <div className="game-uefn-grid">
+            {uefnExperience.map(({ icon: Icon, title, copy }, index) => (
+              <article key={title}>
+                <div><span>0{index + 1}</span><Icon /></div>
+                <h3>{title}</h3>
+                <p>{copy}</p>
+              </article>
+            ))}
+          </div>
+          <p className="game-uefn-note">Fortnite, UEFN and related marks belong to Epic Games. Tool experience does not imply endorsement or affiliation.</p>
         </div>
       </section>
 
@@ -215,7 +247,7 @@ export default function Home() {
         <div className="game-container">
           <div className="game-craft-heading"><p className="game-section-index">04 / Capabilities</p><h2>Technical depth.<br />Creative range.</h2></div>
           <div className="game-craft-grid">{craft.map(({ icon: Icon, title, copy }, index) => <article key={title}><span>0{index + 1}</span><Icon /><h3>{title}</h3><p>{copy}</p></article>)}</div>
-          <div className="game-toolbelt"><span>Unreal Engine 4/5</span><span>Unity</span><span>C++</span><span>C#</span><span>OpenGL</span><span>GLSL</span><span>Blender</span><span>Autodesk Maya</span><span>Git</span><span>AWS</span></div>
+          <div className="game-toolbelt"><span>Unreal Engine 4/5</span><span>UEFN</span><span>Verse</span><span>Fortnite Creative</span><span>Unity</span><span>C++</span><span>C#</span><span>OpenGL</span><span>GLSL</span><span>Blender</span><span>Autodesk Maya</span><span>Git</span><span>AWS</span></div>
         </div>
       </section>
 

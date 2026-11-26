@@ -12,7 +12,7 @@ export const defaultConfig: WebsiteConfig = {
   company: {
     name: "Karl-Johan Bailey",
     legalName: "Karl-Johan Bailey",
-    description: "Game developer and engine programmer working with Unreal Engine, Unity, C++, multiplayer systems and real-time 3D.",
+    description: "Game developer, engine programmer and UEFN creator working with Unreal Engine, Verse, Unity, C++, multiplayer systems and real-time 3D.",
     url: "http://localhost:3000",
     email: "portfolio@example.com",
     phone: "",
