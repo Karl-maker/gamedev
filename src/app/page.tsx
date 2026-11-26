@@ -57,12 +57,13 @@ export default function Home() {
         <div className="game-hero-worlds" aria-hidden="true">
           <div className="game-hero-world game-hero-world-pirate">
             <Image src="/portfolio/pirate-clash-banner.png" alt="" fill priority sizes="62vw" />
+            <div className="game-world-mark game-world-mark-pirate"><b>01</b><span>Released worldwide</span></div>
           </div>
           <div className="game-hero-world game-hero-world-latamx">
             <Image src="/portfolio/fortnite-blitz-royale.jpg" alt="" fill priority sizes="62vw" />
+            <div className="game-world-mark game-world-mark-latamx"><b>02</b><span>In production</span></div>
           </div>
-          <div className="game-comic-burst" />
-          <div className="game-comic-divider"><span>02</span></div>
+          <div className="game-split-spine"><span>Selected worlds</span></div>
         </div>
         <div className="game-hero-overlay" />
         <div className="game-grid-overlay" />
