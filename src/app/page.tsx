@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowDownRight, ArrowUpRight, Blocks, Boxes, Braces, CheckCircle2, Code2, Cpu,
+  ArrowDownRight, ArrowUpRight, BadgeDollarSign, BarChart3, Blocks, Boxes, Braces, CheckCircle2, Code2, Cpu,
   Database, Gamepad2, Gauge, Github, GitBranch, Layers3, Mountain,
-  Map, Monitor, Network, PackageOpen, Palette, Play, Rocket, Ship, Smartphone, Sparkles, Waves,
+  Map, Monitor, Network, PackageOpen, Palette, Play, Rocket, ShieldCheck, Ship, Smartphone, Sparkles, Waves,
 } from "lucide-react";
 import {
   siAppstore, siAutodeskmaya, siBlender, siCplusplus, siGoogleplay,
@@ -29,6 +29,24 @@ const uefnExperience = [
   { icon: Blocks, title: "Creative device orchestration", copy: "Connecting built-in and custom devices into reliable game loops, triggers, encounters, UI feedback and multiplayer rules." },
   { icon: Map, title: "Island & encounter building", copy: "Greyboxing spaces, composing environments, shaping traversal and pacing combat encounters around a clear player journey." },
   { icon: Rocket, title: "Iteration & publishing readiness", copy: "Playtesting, profiling memory and performance, validating multiplayer behavior and preparing islands for Creator Portal review." },
+];
+
+const productSystems = [
+  {
+    icon: BarChart3,
+    title: "Game analytics",
+    copy: "Designing useful event taxonomies for sessions, progression, combat, economy and conversion—then reading funnels, retention and drop-off signals to guide improvements.",
+  },
+  {
+    icon: BadgeDollarSign,
+    title: "Google AdMob rewarded ads",
+    copy: "Integrating opt-in rewarded ads with test inventory, load and failure states, completion callbacks, reward delivery and placements that preserve the core game loop.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Responsible product decisions",
+    copy: "Using telemetry and monetization carefully: clear player value, sensible frequency controls, consent-aware measurement and validation before production rollout.",
+  },
 ];
 
 const engineDepth = [
@@ -165,7 +183,29 @@ export default function Home() {
           </a>
           <div className="game-project-details">
             <div className="game-project-summary"><span className="game-mini-icon"><Ship /></span><p>A complete mobile arcade-survival game where players command a pirate ship, dodge enemy fire, survive escalating waves and build a devastating combat loadout.</p></div>
-            <div className="game-facts"><div><span>Role</span><strong>Game developer / creator</strong></div><div><span>Built with</span><strong>Unity · C# · Mobile</strong></div><div><span>Released on</span><strong>App Store · Google Play</strong></div></div>
+            <div className="game-facts"><div><span>Role</span><strong>Game developer / creator</strong></div><div><span>Built with</span><strong>Unity · C# · Mobile</strong></div><div><span>Product systems</span><strong>Analytics · AdMob rewarded ads</strong></div><div><span>Released on</span><strong>App Store · Google Play</strong></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="game-product-systems">
+        <div className="game-container">
+          <div className="game-product-heading">
+            <p className="game-section-index">02 / Product systems</p>
+            <div>
+              <span className="game-label">Analytics · Monetization · Live improvement</span>
+              <h2>Understanding the game after players press start.</h2>
+              <p>I use game analytics to understand real player behavior and improve pacing, balance, progression and retention. I also have experience integrating Google AdMob rewarded ads as an optional value exchange—designed around player choice rather than interruption.</p>
+            </div>
+          </div>
+          <div className="game-product-grid">
+            {productSystems.map(({ icon: Icon, title, copy }, index) => (
+              <article key={title}>
+                <div><span>0{index + 1}</span><Icon /></div>
+                <h3>{title}</h3>
+                <p>{copy}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -247,7 +287,7 @@ export default function Home() {
         <div className="game-container">
           <div className="game-craft-heading"><p className="game-section-index">04 / Capabilities</p><h2>Technical depth.<br />Creative range.</h2></div>
           <div className="game-craft-grid">{craft.map(({ icon: Icon, title, copy }, index) => <article key={title}><span>0{index + 1}</span><Icon /><h3>{title}</h3><p>{copy}</p></article>)}</div>
-          <div className="game-toolbelt"><span>Unreal Engine 4/5</span><span>UEFN</span><span>Verse</span><span>Fortnite Creative</span><span>Unity</span><span>C++</span><span>C#</span><span>OpenGL</span><span>GLSL</span><span>Blender</span><span>Autodesk Maya</span><span>Git</span><span>AWS</span></div>
+          <div className="game-toolbelt"><span>Unreal Engine 4/5</span><span>UEFN</span><span>Verse</span><span>Fortnite Creative</span><span>Unity</span><span>C++</span><span>C#</span><span>Game analytics</span><span>Google AdMob</span><span>Rewarded ads</span><span>OpenGL</span><span>GLSL</span><span>Blender</span><span>Autodesk Maya</span><span>Git</span><span>AWS</span></div>
         </div>
       </section>
 

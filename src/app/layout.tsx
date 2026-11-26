@@ -9,8 +9,8 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(portfolioConfig.baseUrl),
   title: { default: "Karl-Johan Bailey | Game Developer & Engine Programmer", template: "%s | Karl-Johan Bailey" },
-  description: "Game developer, engine programmer and UEFN creator building polished experiences with Unreal Engine, Verse, Unity, C++, multiplayer systems, Blender and Maya.",
-  keywords: ["game developer", "UEFN developer", "Verse developer", "Fortnite Creative builder", "Unreal Engine developer", "Unity developer", "C++ engine programmer", "multiplayer game developer", "Blender", "Maya"],
+  description: "Game developer, engine programmer and UEFN creator building polished experiences with game analytics, Google AdMob, Unreal Engine, Verse, Unity, C++ and multiplayer systems.",
+  keywords: ["game developer", "game analytics", "Google AdMob developer", "rewarded ads", "UEFN developer", "Verse developer", "Fortnite Creative builder", "Unreal Engine developer", "Unity developer", "C++ engine programmer", "multiplayer game developer", "Blender", "Maya"],
   applicationName: "Karl-Johan Bailey — Game Portfolio",
   authors: [{ name: "Karl-Johan Bailey" }],
   creator: "Karl-Johan Bailey",
@@ -46,7 +46,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     url: portfolioConfig.baseUrl,
     sameAs: [portfolioConfig.githubUrl],
     jobTitle: "Game Developer and Engine Programmer",
-    knowsAbout: ["Unreal Engine", "Unreal Editor for Fortnite", "Verse programming", "Fortnite Creative", "Unity", "C++", "Multiplayer game development", "OpenGL", "Blender", "Autodesk Maya"],
+    knowsAbout: ["Unreal Engine", "Unreal Editor for Fortnite", "Verse programming", "Fortnite Creative", "Unity", "C++", "Game analytics", "Google AdMob rewarded ads", "Multiplayer game development", "OpenGL", "Blender", "Autodesk Maya"],
   };
 
   return (
