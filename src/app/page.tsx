@@ -3,10 +3,11 @@ import Link from "next/link";
 import {
   ArrowDownRight, ArrowUpRight, Boxes, Braces, CheckCircle2, Cpu,
   Database, Gamepad2, Gauge, Github, GitBranch, Layers3, Mountain,
-  Network, PackageOpen, Palette, Play, Ship, Smartphone, Sparkles, Waves,
+  Monitor, Network, PackageOpen, Palette, Play, Ship, Smartphone, Sparkles, Waves,
 } from "lucide-react";
 import {
-  siAutodeskmaya, siBlender, siCplusplus, siOpengl, siUnity, siUnrealengine,
+  siAppstore, siAutodeskmaya, siBlender, siCplusplus, siGoogleplay,
+  siOpengl, siUnity, siUnrealengine,
   type SimpleIcon,
 } from "simple-icons";
 import { portfolioConfig } from "@/config/portfolio";
@@ -53,7 +54,16 @@ export default function Home() {
   return (
     <div className="game-portfolio">
       <section className="game-hero" id="top">
-        <Image src="/portfolio/pirate-clash-banner.png" alt="Pirate ships navigating an icy ocean in Clash of Pirates" fill priority sizes="100vw" className="game-hero-image" />
+        <div className="game-hero-worlds" aria-hidden="true">
+          <div className="game-hero-world game-hero-world-pirate">
+            <Image src="/portfolio/pirate-clash-banner.png" alt="" fill priority sizes="62vw" />
+          </div>
+          <div className="game-hero-world game-hero-world-latamx">
+            <Image src="/portfolio/fortnite-blitz-royale.jpg" alt="" fill priority sizes="62vw" />
+          </div>
+          <div className="game-comic-burst" />
+          <div className="game-comic-divider"><span>02</span></div>
+        </div>
         <div className="game-hero-overlay" />
         <div className="game-grid-overlay" />
         <div className="game-container game-hero-content">
@@ -65,7 +75,29 @@ export default function Home() {
             <a className="game-button game-button-primary" href="#work">Explore selected work <ArrowDownRight /></a>
             <a className="game-button game-button-ghost" href={portfolioConfig.githubUrl} target="_blank" rel="noreferrer"><Github /> GitHub profile</a>
           </div>
-          <div className="game-hero-meta"><span>UE4 / UE5</span><span>Unity</span><span>C++</span><span>Blender / Maya</span></div>
+          <div className="game-hero-projects" aria-label="Featured games">
+            <div className="game-hero-project game-hero-project-pirate">
+              <span><i /> Live now · Unity</span>
+              <strong><Ship /> Clash of Pirates</strong>
+              <small>Mobile naval arcade survival</small>
+              <div className="game-store-links">
+                <a href={portfolioConfig.pirateClashGooglePlayUrl} target="_blank" rel="noreferrer" aria-label="Download Clash of Pirates on Google Play">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d={siGoogleplay.path} /></svg>
+                  <b><em>Get it on</em>Google Play</b>
+                </a>
+                <a href={portfolioConfig.pirateClashAppStoreUrl} target="_blank" rel="noreferrer" aria-label="Download Clash of Pirates on the App Store">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d={siAppstore.path} /></svg>
+                  <b><em>Download on the</em>App Store</b>
+                </a>
+              </div>
+            </div>
+            <div className="game-hero-project game-hero-project-latamx">
+              <span><i /> Coming 2028 · Unreal Engine 5</span>
+              <strong><Sparkles /> LATAMX Battle Zone</strong>
+              <small>Magic, mass battles and piracy</small>
+              <Link className="game-pc-link" href="/projects/latamx-battle-zone"><Monitor /> PC development <ArrowUpRight /></Link>
+            </div>
+          </div>
         </div>
         <div className="game-scroll-label">Selected work <span /></div>
       </section>
