@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:game": "node scripts/run-game-env.mjs dev",
     "build": "next build",
+    "build:game": "node scripts/run-game-env.mjs build",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",

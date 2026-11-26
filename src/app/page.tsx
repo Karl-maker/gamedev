@@ -8,6 +8,7 @@ import {
   siAutodeskmaya, siBlender, siCplusplus, siOpengl, siUnity, siUnrealengine,
   type SimpleIcon,
 } from "simple-icons";
+import { portfolioConfig } from "@/config/portfolio";
 
 const unrealSystems = [
   "Server-authoritative multiplayer", "C++ gameplay system scheduler",
@@ -61,7 +62,7 @@ export default function Home() {
           <p className="game-hero-lede">Production-minded games and engine technology across Unreal Engine, Unity, C++, multiplayer systems and real-time 3D.</p>
           <div className="game-actions">
             <a className="game-button game-button-primary" href="#work">Explore selected work <ArrowDownRight /></a>
-            <a className="game-button game-button-ghost" href="https://github.com/Karl-maker" target="_blank" rel="noreferrer"><Github /> GitHub profile</a>
+            <a className="game-button game-button-ghost" href={portfolioConfig.githubUrl} target="_blank" rel="noreferrer"><Github /> GitHub profile</a>
           </div>
           <div className="game-hero-meta"><span>UE4 / UE5</span><span>Unity</span><span>C++</span><span>Blender / Maya</span></div>
         </div>
@@ -90,7 +91,7 @@ export default function Home() {
       <section className="game-project game-project-featured" id="work">
         <div className="game-container">
           <div className="game-project-heading"><div><span className="game-label">Flagship release · Unity</span><h2>Clash of Pirates</h2></div><span className="game-project-number">01</span></div>
-          <a className="game-project-visual" href="https://pirateclash.syncpoly.com/" target="_blank" rel="noreferrer" aria-label="Visit the Clash of Pirates website">
+          <a className="game-project-visual" href={portfolioConfig.pirateClashUrl} target="_blank" rel="noreferrer" aria-label="Visit the Clash of Pirates website">
             <Image src="/portfolio/pirate-clash-banner.png" alt="Clash of Pirates naval survival gameplay" fill sizes="(max-width: 1200px) 100vw, 1200px" />
             <div className="game-project-visual-shade" />
             <div className="game-project-badge"><Play fill="currentColor" /> Live on iOS & Android</div>
@@ -111,7 +112,7 @@ export default function Home() {
             <ul className="game-system-list">{unrealSystems.map((system) => <li key={system}><CheckCircle2 />{system}</li>)}</ul>
           </div>
           <div className="game-unreal-showcase">
-            <a className="game-unreal-media" href="https://github.com/Karl-maker/latamx-battle-zone" target="_blank" rel="noreferrer">
+            <a className="game-unreal-media" href={portfolioConfig.latamxRepoUrl} target="_blank" rel="noreferrer">
               <Image src="/portfolio/fortnite-blitz-royale.jpg" alt="Unreal Engine multiplayer visual reference for LATAMX Battle Zone" fill sizes="(max-width: 900px) 100vw, 56vw" />
               <span><Github /> View LATAMX Battle Zone <ArrowUpRight /></span>
               <small>Unreal multiplayer visual reference · Epic Games artwork</small>
@@ -147,7 +148,7 @@ export default function Home() {
         <div className="game-engine-copy">
           <p className="game-section-index">03 / Engine R&amp;D</p><span className="game-label">Custom technology · C++ / OpenGL</span><h2>Duppy Engine</h2>
           <p>A research-driven game engine built from the ground up: deterministic loop, ECS gameplay, streamed worlds, real-time graphics and developer tooling.</p>
-          <div className="game-actions"><a className="game-button game-button-primary" href="https://github.com/Karl-maker/game-engine" target="_blank" rel="noreferrer"><Github /> Explore source <ArrowUpRight /></a></div>
+          <div className="game-actions"><a className="game-button game-button-primary" href={portfolioConfig.engineRepoUrl} target="_blank" rel="noreferrer"><Github /> Explore source <ArrowUpRight /></a></div>
         </div>
         <div className="game-engine-console">
           <div className="game-console-bar"><span /><span /><span /><b>duppy / renderer</b></div>
@@ -183,7 +184,7 @@ export default function Home() {
 
       <section className="game-contact game-container" id="contact">
         <div><span className="game-label">Have a world in mind?</span><h2>Let’s make it playable.</h2></div>
-        <a className="game-contact-link" href="https://github.com/Karl-maker" target="_blank" rel="noreferrer">Start a conversation on GitHub <ArrowUpRight /></a>
+        <a className="game-contact-link" href={portfolioConfig.githubUrl} target="_blank" rel="noreferrer">Start a conversation on GitHub <ArrowUpRight /></a>
         <div className="game-contact-orbit"><Waves /></div><Smartphone className="game-contact-icon" />
       </section>
     </div>

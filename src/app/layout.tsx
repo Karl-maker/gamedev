@@ -3,10 +3,11 @@ import "@fontsource-variable/manrope";
 import "@fontsource-variable/sora";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { portfolioConfig } from "@/config/portfolio";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
+  metadataBase: new URL(portfolioConfig.baseUrl),
   title: { default: "Karl-Johan Bailey | Game Developer & Engine Programmer", template: "%s | Karl-Johan Bailey" },
   description: "Game developer and engine programmer building polished experiences with Unreal Engine, Unity, C++, multiplayer systems, Blender and Maya.",
   keywords: ["game developer", "Unreal Engine developer", "Unity developer", "C++ engine programmer", "multiplayer game developer", "Blender", "Maya"],
@@ -41,9 +42,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   const person = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Karl-Johan Bailey",
-    url: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
-    sameAs: ["https://github.com/Karl-maker"],
+    name: portfolioConfig.name,
+    url: portfolioConfig.baseUrl,
+    sameAs: [portfolioConfig.githubUrl],
     jobTitle: "Game Developer and Engine Programmer",
     knowsAbout: ["Unreal Engine", "Unity", "C++", "Multiplayer game development", "OpenGL", "Blender", "Autodesk Maya"],
   };
