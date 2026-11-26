@@ -5,6 +5,8 @@ node_modules
 .env.auction
 .env.legal
 .env.local
+.env.software
+.env.game
 coverage
 *.log
 temp
